@@ -12,6 +12,10 @@ export class NavComponent{
     {
       linkName: 'Login',
       fragment: '/login'
+    },
+    {
+      linkName: 'Home',
+      fragment: '/home'
     }
   ];
 }
