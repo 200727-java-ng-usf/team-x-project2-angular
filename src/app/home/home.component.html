@@ -1,6 +1,11 @@
 <!--  as a user, I want to see a home
       screen with the current weather displayed -->
 <div id="home-container" class="container">
-
+  <div *ngFor="let currentDay of forecast; index as i">
+    <div class="day">{{ currentDay.forecast }}</div>
+    <div *ngFor="let time of toArray(currentDay.forecast)">
+      {{ time }}: {{ currentDay.forecast[time] }}
+    </div>
+  </div>
 
 </div>
