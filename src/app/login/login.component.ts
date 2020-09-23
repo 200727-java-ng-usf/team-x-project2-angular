@@ -17,21 +17,14 @@ export class LoginComponent implements OnInit {
   // Boolean Submitted Value
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
-    console.log('LoginComponent instantiating...');
-    console.log('LoginComponent instantiation complete.');
-   }
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    console.log('Initializing form values for LoginComponent...');
-
-    // Validate  loginForm
+    // Validate loginForm
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
-
-    console.log('LoginComponent form value initialization complete.');
   }
 
   get formFields() {
@@ -48,6 +41,23 @@ export class LoginComponent implements OnInit {
 
     this.loading = true;
 
-    // TODO: Authenticate using auth service
+    // Authenticate
+    this.authService.authenticate(this.formFields.username.value, this.formFields.password.value)
+                    .subscribe(
+                      () => {
+                        this.loading = false;
+                        console.log('login successful!');
+                        console.log('Navigating to dashboard...');
+                        this.router.navigate(['/dashboard']);
+                      },
+                      err => {
+                        console.log(err);
+                        this.loading = false;
+                        this.submitted = false;
+                      },
+                      () => {
+                        console.log('observable complete');
+                      }
+                    );
   }
 }
