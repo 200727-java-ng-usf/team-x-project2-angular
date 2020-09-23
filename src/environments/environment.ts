@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  // TODO: insert correct User API url, aka Service Layer
+  USER_API_URL: ''
 };
 
 /*
