@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit {
 
   currentWeather: any = <any>{};
   currentWeatherDescription = '';
-  currentWeatherIconId;
+  currentWeatherIconId = 0;
   thunderstorm = false;
   drizzle = false;
   rain = false;
@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   constructor(private hFService: HomeForecastService) { }
 
   async ngOnInit() {
+    // harcoded zipcode for now, will get from current user
     this.currentWeather = <Object[]> await this.hFService.getForecast('29150');
     this.currentWeatherDescription = this.currentWeather.weather[0].description;
     this.currentWeatherIconId = this.currentWeather.weather[0].id;
