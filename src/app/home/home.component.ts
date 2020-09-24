@@ -9,16 +9,17 @@ import { HomeForecastService } from '../services/home-forecast.service';
 export class HomeComponent implements OnInit {
 
   currentWeather: any = <any>{};
-
+  currentWeatherDescription = '';
+  xurrentWeatherIconId = '';
   constructor(private hFService: HomeForecastService) { }
 
 
 
   async ngOnInit() {
-    this.currentWeather = <Object[]> await this.hFService.getForecast('tmd1990@Live.com');
-
+    this.currentWeather = <Object[]> await this.hFService.getForecast('29150');
+    this.currentWeatherDescription = this.currentWeather.weather[0].description;
+    this.xurrentWeatherIconId = this.currentWeather.weather[0].icon;
     console.log(this.currentWeather);
-
   }
 
   resultFound() {
