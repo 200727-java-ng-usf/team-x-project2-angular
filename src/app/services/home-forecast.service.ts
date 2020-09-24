@@ -10,7 +10,7 @@ export class HomeForecastService {
 
   constructor(private http: HttpClient) { }
 
-  async getForecast(email: string) {
+  async getForecast(zip: string) {
     let currentWeatherCall = env.OPEN_WEATHER_API_URL + 'zip=' + '29150' + ',us' + '&appid=' + env.OPEN_WEATHER_API_KEY;
     return await this.http.get(currentWeatherCall, {
 
