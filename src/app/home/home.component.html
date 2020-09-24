@@ -28,10 +28,31 @@
         <h6 class="flex-grow-1">Clouds:</h6>
         <h6>{{currentWeather.clouds?.all}}%</h6>
       </div>
-      <!-- if based on weather: description -->
       <div class="d-flex">
         <h6>{{ currentWeatherDescription }}</h6>
-        <img src="assets/svg/wi-cloud.svg" alt="">
+
+      </div>
+      <!-- switch based on weather: description -->
+      <div *ngIf='thunderstorm'>
+        <img src="assets/svg/wi-thunderstorm.svg" alt="thunderstorm clouds" class="img-thumbnail">
+      </div>
+      <div *ngIf='drizzle'>
+        <img src="assets/svg/wi-sprinkle.svg" alt="drizzle clouds" class="img-thumbnail">
+      </div>
+      <div *ngIf='rain'>
+        <img src="assets/svg/wi-rain.svg" alt="rain clouds" class="img-thumbnail">
+      </div>
+      <div *ngIf='snow'>
+        <img src="assets/svg/wi-snow.svg" alt="snow image" class="img-thumbnail">
+      </div>
+      <div *ngIf='clear'>
+        <img src="assets/svg/wi-day-sunny.svg" alt="clear sky image" class="img-thumbnail">
+      </div>
+      <div *ngIf='clouds'>
+        <img src="assets/svg/wi-cloud.svg" alt="clouds image" class="img-thumbnail">
+      </div>
+      <div *ngIf='atmosphere'>
+        <img src="assets/svg/wi-smog.svg" alt="atmosphere image" class="img-thumbnail">
       </div>
   </div>
 

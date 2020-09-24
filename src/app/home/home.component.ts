@@ -10,15 +10,42 @@ export class HomeComponent implements OnInit {
 
   currentWeather: any = <any>{};
   currentWeatherDescription = '';
-  xurrentWeatherIconId = '';
+  currentWeatherIconId;
+  thunderstorm = false;
+  drizzle = false;
+  rain = false;
+  snow = false;
+  clear = false;
+  clouds = false;
+  atmosphere = false;
   constructor(private hFService: HomeForecastService) { }
-
-
 
   async ngOnInit() {
     this.currentWeather = <Object[]> await this.hFService.getForecast('29150');
     this.currentWeatherDescription = this.currentWeather.weather[0].description;
-    this.xurrentWeatherIconId = this.currentWeather.weather[0].icon;
+    this.currentWeatherIconId = this.currentWeather.weather[0].id;
+    // determine the current condition using: https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2
+    if(this.currentWeatherIconId >= 200 && this.currentWeatherIconId < 300){
+      this.thunderstorm = true;
+    }
+    if(this.currentWeatherIconId >= 300 && this.currentWeatherIconId < 400){
+      this.drizzle = true;
+    }
+    if(this.currentWeatherIconId >= 500 && this.currentWeatherIconId < 600){
+      this.rain = true;
+    }
+    if(this.currentWeatherIconId >= 600 && this.currentWeatherIconId < 700){
+      this.snow = true;
+    }
+    if(this.currentWeatherIconId >= 700 && this.currentWeatherIconId < 800){
+      this.atmosphere = true;
+    }
+    if(this.currentWeatherIconId === 800 ){
+      this.clear = true;
+    }
+    if(this.currentWeatherIconId > 800  && this.currentWeatherIconId < 900 ){
+      this.clouds = true;
+    }
     console.log(this.currentWeather);
   }
 
