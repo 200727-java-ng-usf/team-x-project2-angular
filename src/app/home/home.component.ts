@@ -9,22 +9,20 @@ import { HomeForecastService } from '../services/home-forecast.service';
 })
 export class HomeComponent implements OnInit {
 
+  currentWeather: any = <any>{};
   constructor(private hFService: HomeForecastService) { }
 
-  forecast = [];
+
 
   async ngOnInit() {
-    let homeForecast = <Object[]> await this.hFService.getForecast('tmd1990@Live.com');
+    this.currentWeather = <Object[]> await this.hFService.getForecast('tmd1990@Live.com');
 
-    console.log(homeForecast);
+    console.log(this.currentWeather);
 
-    for (let day of homeForecast) {
-      this.forecast.push(day);
-    }
   }
 
-  toArray(days: object) {
-    return Object.keys(days).map(key => days[key]);
+  resultFound() {
+    return Object.keys(this.currentWeather).map(key => this.currentWeather[key]);
   }
 
 }
