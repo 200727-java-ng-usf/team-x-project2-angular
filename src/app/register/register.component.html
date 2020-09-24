@@ -1,0 +1,59 @@
+<div id="register-container">
+    <img class="mb-4" src="" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input id="username" type="text" class="form-control" formControlName="username"/>
+            <div *ngIf="submitted && formFields.username.errors">
+                <p class="alert alert-danger">Username is required!</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input id="password" type="password" class="form-control" formControlName="password"/>
+            <div *ngIf="submitted && formFields.password.errors">
+                <p class="alert alert-danger">Password is required!</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input id="firstName" type="text" class="form-control" formControlName="firstName"/>
+            <div *ngIf="submitted && formFields.firstName.errors">
+                <p class="alert alert-danger">First Name is required!</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input id="lastName" type="text" class="form-control" formControlName="lastName"/>
+            <div *ngIf="submitted && formFields.lastName.errors">
+                <p class="alert alert-danger">Last Name is required!</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" class="form-control" formControlName="email"/>
+            <div *ngIf="submitted && formFields.email.errors">
+                <p class="alert alert-danger">Email is required!</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="zipcode">Zip Code</label>
+            <input id="zipcode" type="text" class="form-control" formControlName="zipcode"/>
+            <div *ngIf="submitted && formFields.zipcode.errors">
+                <p class="alert alert-danger">Zip Code is required!</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary" [disabled]="loading">Register</button>
+            <img id="loading-img" src="assets/loading.gif" *ngIf="loading" style="height:100px; width:100px;"/>
+        </div>
+    </form>
+
+</div>

@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // TODO: insert correct User API url, aka Service Layer
-  USER_API_URL: ''
+  USER_API_URL: 'http://project2springapp-env.eba-f2bmdfth.us-east-2.elasticbeanstalk.com'
 };
 
 /*
