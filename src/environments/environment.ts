@@ -5,7 +5,9 @@
 export const environment = {
   production: false,
   // TODO: insert correct User API url, aka Service Layer
-  USER_API_URL: ''
+  USER_API_URL: '',
+  OPEN_WEATHER_API_URL: 'https://api.openweathermap.org/data/2.5/weather?',
+  OPEN_WEATHER_API_KEY: '37be25ea7137d9eef8dfdbf6d70e1b23'
 };
 
 /*

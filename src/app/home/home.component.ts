@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Live } from '@ng-bootstrap/ng-bootstrap/util/accessibility/live';
 import { HomeForecastService } from '../services/home-forecast.service';
 
 @Component({
@@ -10,6 +9,7 @@ import { HomeForecastService } from '../services/home-forecast.service';
 export class HomeComponent implements OnInit {
 
   currentWeather: any = <any>{};
+
   constructor(private hFService: HomeForecastService) { }
 
 

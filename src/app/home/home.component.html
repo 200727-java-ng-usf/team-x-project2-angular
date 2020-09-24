@@ -4,9 +4,22 @@
   <div>
     <h2>Welcome</h2>
   </div>
-  <div *ngIf='resultFound()'>Current Weather for
-    {{ currentWeather }}
-
+  <div *ngIf='resultFound()'>
+    <div class="card p-4">
+      <h2>Current Weather for {{ currentWeather.name }}</h2>
+      <div class="d-flex">
+          <h6 class="flex-grow-1">Current Temperature:</h6>
+          <h6>{{currentWeather.main?.temp - 273.15 | number:'1.0-0'}}<sup>o</sup>C</h6>
+      </div>
+      <div class="d-flex">
+        <h6 class="flex-grow-1">Humidity:</h6>
+        <h6>{{currentWeather.main?.humidity}}%</h6>
+      </div>
+      <div class="d-flex">
+        <h6 class="flex-grow-1">Pressure:</h6>
+        <h6>{{currentWeather.main?.pressure}}mb</h6>
+      </div>
+  </div>
 
   </div>
   <div *ngIf='!resultFound()'>
