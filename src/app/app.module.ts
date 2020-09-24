@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+import { SevenDayForecastComponent } from './seven-day-forecast/seven-day-forecast.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { RegisterComponent } from './register/register.component';
     LoginComponent,
     NavComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    SevenDayForecastComponent
   ],
   imports: [
     BrowserModule,
