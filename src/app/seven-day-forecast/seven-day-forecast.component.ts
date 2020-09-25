@@ -23,6 +23,10 @@ export class SevenDayForecastComponent implements OnInit {
     { // red
       backgroundColor: 'rgba(255,0,0,0.3)',
       borderColor: 'red',
+    },
+    { // Blue
+      backgroundColor: 'rgba(179,217,255,0.2)',
+      borderColor: 'rgba(51,153,255,1)',
     }
   ];
   tempChartLegend = true;
@@ -30,14 +34,16 @@ export class SevenDayForecastComponent implements OnInit {
   tempChartPlugins = [];
   forcastTemps: SingleDataSet = [];
   forecastMaxTemps: SingleDataSet = [];
+  forecastMinTemps: SingleDataSet = [];
   tempChartData: ChartDataSets[] = [
-    { data: this.forcastTemps, label: 'Forecast Temps' },
-    { data: this.forecastMaxTemps, label: 'Forecast Max Temps' }
+    { data: this.forcastTemps, label: 'Temperature' },
+    { data: this.forecastMaxTemps, label: 'Maximum Temperature' },
+    { data: this.forecastMinTemps, label: 'Minimum Temperature' },
   ];
   // ------------------- Humidity Chart ----------------------//
   forcastHumidity: SingleDataSet = [];
   humidityChartData: ChartDataSets[] = [
-    { data: this.forcastHumidity, label: 'Humidity Temps' }
+    { data: this.forcastHumidity, label: 'Humidity' }
   ];
   humidityChartColors: Color[] = [
     { // Blue
@@ -54,10 +60,15 @@ export class SevenDayForecastComponent implements OnInit {
       this.forcastTemps[i] = this.currentForecast.list[i].main.temp;
     }
     for (let i = 0; i < 40; i++){
-      this.forecastMaxTemps[i] = this.currentForecast.list[i].main.temp_min;
+      this.forecastMaxTemps[i] = this.currentForecast.list[i].main.temp_max;
     }
     for (let i = 0; i < 40; i++){
-      this.tempChartLabels[i] = '+' + i;
+      this.forecastMinTemps[i] = this.currentForecast.list[i].main.temp_min;
+    }
+    for (let i = 0; i < 40; i++){
+      let str = this.currentForecast.list[i].dt_txt;
+      let subStr = str.substring(5, str.length - 3);
+      this.tempChartLabels[i] = subStr;
     }
     for (let i = 0; i < 40; i++){
       this.forcastHumidity[i] = this.currentForecast.list[i].main.humidity;
