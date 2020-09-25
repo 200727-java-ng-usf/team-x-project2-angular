@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SevenDayForecastService } from '../services/seven-day-forecast.service';
 
 @Component({
   selector: 'app-seven-day-forecast',
@@ -7,9 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SevenDayForecastComponent implements OnInit {
 
-  constructor() { }
+  currentForecast: any = <any>{};
 
-  ngOnInit(): void {
+  forcastTemps = [];
+  forcastHumidity = [];
+
+  constructor(private forecastService: SevenDayForecastService) { }
+
+  async ngOnInit() {
+    this.currentForecast = <Object[]> await this.forecastService.getForecast('29150');
+    for (let i = 0; i < 40; i++){
+      this.forcastTemps[i] = this.currentForecast.list[i].main.temp;
+    }
+    var ctx = document.getElementById('myChart');
+
+    for (let i = 0; i < 40; i++){
+      this.forcastHumidity[i] = this.currentForecast.list[i].main.humidity;
+    }
+    console.log(this.forcastTemps);
+    console.log(this.currentForecast);
+
   }
 
 }

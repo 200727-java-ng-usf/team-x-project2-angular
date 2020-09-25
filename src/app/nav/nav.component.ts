@@ -20,6 +20,10 @@ export class NavComponent{
     {
       linkName: 'Register',
       fragment: '/register'
+    },
+    {
+      linkName: 'Forecast',
+      fragment: '/forecast'
     }
   ];
 }
