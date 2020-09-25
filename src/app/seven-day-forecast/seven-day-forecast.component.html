@@ -2,7 +2,7 @@
 <br/>
 <div class="container">
   <div class="chartjs-container">
-    <h4>Temperature Forecast</h4>
+    <h4>40 Hour Temperature Forecast: </h4>
     <canvas baseChart
         [datasets]="tempChartData"
         [labels]="tempChartLabels"
@@ -17,7 +17,7 @@
 <br/>
 <div class="container">
   <div class="chartjs-container">
-    <h4>Humidity Forecast</h4>
+    <h4>40 Hour Humidity Forecast: </h4>
     <canvas baseChart
         [datasets]="humidityChartData"
         [labels]="tempChartLabels"
@@ -29,18 +29,34 @@
     </canvas>
   </div>
 </div>
-<!-- {{ i }} - {{ hour?.temp }}
+
+<br/>
 <div class="container">
-<div class="card mb-4 box-shadow" style="width: 10rem;" *ngFor="let hour of currentForecast?.list; let i = index">
-  <div class="card-body">
-    <h5 class="card-title">Time: {{ hour?.dt_txt | date:'medium' }}</h5>
+  <div class="chartjs-container">
+    <h4>8 Hour UV Index Forecast: </h4>
+    <canvas baseChart
+        [datasets]="uvChartData"
+        [labels]="uvChartLabels"
+        [options]="uvChartOptions"
+        [colors]="uvChartColors"
+        [legend]="uvChartLegend"
+        [chartType]="uvChartType"
+        [plugins]="uvChartPlugins">
+    </canvas>
   </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Temp: {{ hour.main?.temp }}</li>
-    <li class="list-group-item">Feels Like: {{ hour.main?.feels_like }}</li>
-    <li class="list-group-item">Humidity: {{ hour.main?.humidity }}</li>
-    <li class="list-group-item">Humidity: {{ hour.weather[0].description }}</li>
-  </ul>
 </div>
+
+<!-- {{ i }} - {{ hour?.temp }} -->
+<!-- <div class="d-flex align-content-start flex-wrap">
+  <div class="p-2 bd-highlight" *ngFor="let hour of currentForecast?.list; let i = index">
+      <ul class="list-group ">
+        <li class="list-group-item">Time: {{ hour?.dt_txt | date:'medium' }}</li>
+        <li class="list-group-item">Temp: {{ hour.main?.temp }}</li>
+        <li class="list-group-item">Feels Like: {{ hour.main?.feels_like }}</li>
+        <li class="list-group-item">Humidity: {{ hour.main?.humidity }}</li>
+        <li class="list-group-item">Humidity: {{ hour.weather[0].description }}</li>
+      </ul>
+    </div>
 </div> -->
+
 

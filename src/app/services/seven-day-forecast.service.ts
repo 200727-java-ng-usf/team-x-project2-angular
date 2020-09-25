@@ -15,4 +15,10 @@ export class SevenDayForecastService {
 
     }).toPromise();
   }
+  async getUVForecast(zip: string) {
+    let currentWeatherCall = env.OPEN_WEATHER_API_URL + '/uvi/forecast?' + 'lat=' + 83 + '&lon=' + 30 + '&appid=' + env.OPEN_WEATHER_API_KEY;
+    return await this.http.get(currentWeatherCall, {
+
+    }).toPromise();
+  }
 }

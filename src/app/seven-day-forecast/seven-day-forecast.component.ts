@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SevenDayForecastService } from '../services/seven-day-forecast.service';
 import { ChartOptions, ChartDataSets } from 'chart.js';
 import { Color, Label, SingleDataSet } from 'ng2-charts';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-seven-day-forecast',
@@ -10,6 +11,7 @@ import { Color, Label, SingleDataSet } from 'ng2-charts';
 })
 export class SevenDayForecastComponent implements OnInit {
   currentForecast: any = <any>{};
+  currentUVForecast: any = <any>{};
   // ------------------- Temperature Chart ----------------------//
   tempChartLabels: Label[] = [];
   tempChartOptions: ChartOptions = {
@@ -51,11 +53,30 @@ export class SevenDayForecastComponent implements OnInit {
       borderColor: 'rgba(51,153,255,1)',
     }
   ];
-  constructor(private forecastService: SevenDayForecastService) { }
+  // ------------------- UV Chart ----------------------//
+  uvData: SingleDataSet = [];
+  uvChartData: ChartDataSets[] = [
+    { data: this.uvData, label: 'UV Index' }
+  ];
+  uvChartColors: Color[] = [
+    { // Blue
+      backgroundColor: 'rgba(256,196,59,0.2)',
+      borderColor: 'rgba(252,105,0,1)',
+    }
+  ];
+  uvChartLegend = true;
+  uvChartType = 'line';
+  uvChartPlugins = [];
+  uvChartLabels: Label[] = [];
+  uvChartOptions: ChartOptions = {
+    responsive: true
+  };
+  constructor(private forecastService: SevenDayForecastService, private authService: AuthService) { }
 
   async ngOnInit() {
     // Get the forecast from the service
     this.currentForecast = <Object[]> await this.forecastService.getForecast('29150');
+    this.currentUVForecast = <Object[]> await this.forecastService.getUVForecast('29150');
     for (let i = 0; i < 40; i++){
       this.forcastTemps[i] = this.currentForecast.list[i].main.temp;
     }
@@ -73,6 +94,14 @@ export class SevenDayForecastComponent implements OnInit {
     for (let i = 0; i < 40; i++){
       this.forcastHumidity[i] = this.currentForecast.list[i].main.humidity;
     }
+    // ------------------- UV Chart ----------------------//
+    for (let i = 0; i < 8; i++){
+      this.uvChartLabels[i] = '+' + i;
+    }
+    for (let i = 0; i < 8; i++){
+      this.uvData[i] = this.currentUVForecast[i]?.value;
+    }
+
   }
 
 }
