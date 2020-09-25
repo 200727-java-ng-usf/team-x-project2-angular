@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RegisterService } from '../services/register.service';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   loading = false;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private registerService: RegisterService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private accountService: AccountService, private router: Router) {
 
     console.log('RegisterComponent instantiating...');
     console.log('RegisterComponent instantiation complete.');
@@ -51,7 +51,7 @@ export class RegisterComponent implements OnInit {
     this.loading = true;
 
     //TODO once all columns are known
-    this.registerService.register(this.formFields.username.value, this.formFields.password.value, this.formFields.firstName.value, 
+    this.accountService.register(this.formFields.username.value, this.formFields.password.value, this.formFields.firstName.value, 
       this.formFields.lastName.value, this.formFields.email.value)
                         .subscribe(
                           // user successfully registered

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-nav',
@@ -6,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent{
+
+  constructor(private accountService: AccountService) {
+
+  }
 
   // Nav Links
   navLinks = [
@@ -20,6 +25,10 @@ export class NavComponent{
     {
       linkName: 'Register',
       fragment: '/register'
+    },
+    {
+      linkName: 'Profile',
+      fragment: '/profile'
     }
   ];
 }
