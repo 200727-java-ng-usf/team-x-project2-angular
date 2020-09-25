@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   // Boolean Submitted Value
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {
     // Validate loginForm
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
 
     // Authenticate
-    this.authService.authenticate(this.formFields.username.value, this.formFields.password.value)
+    this.accountService.authenticate(this.formFields.username.value, this.formFields.password.value)
                     .subscribe(
                       () => {
                         this.loading = false;

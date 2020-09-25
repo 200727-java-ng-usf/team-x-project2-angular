@@ -9,18 +9,18 @@ import { AccountService } from '../services/account.service';
 export class NavComponent{
 
   constructor(private accountService: AccountService) {
-
+    
   }
 
   // Nav Links
   navLinks = [
     {
-      linkName: 'Login',
-      fragment: '/login'
-    },
-    {
       linkName: 'Home',
       fragment: '/home'
+    },
+    {
+      linkName: 'Login',
+      fragment: '/login'
     },
     {
       linkName: 'Register',
