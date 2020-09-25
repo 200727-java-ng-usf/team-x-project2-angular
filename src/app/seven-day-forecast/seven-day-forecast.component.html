@@ -1,8 +1,35 @@
 <br/>
 <br/>
-<canvas id="tempChart" width="400" height="400"></canvas>
-
-<!-- {{ i }} - {{ hour?.temp }} -->
+<div class="container">
+  <div class="chartjs-container">
+    <h4>Temperature Forecast</h4>
+    <canvas baseChart
+        [datasets]="tempChartData"
+        [labels]="tempChartLabels"
+        [options]="tempChartOptions"
+        [colors]="tempChartColors"
+        [legend]="tempChartLegend"
+        [chartType]="tempChartType"
+        [plugins]="tempChartPlugins">
+    </canvas>
+  </div>
+</div>
+<br/>
+<div class="container">
+  <div class="chartjs-container">
+    <h4>Humidity Forecast</h4>
+    <canvas baseChart
+        [datasets]="humidityChartData"
+        [labels]="tempChartLabels"
+        [options]="tempChartOptions"
+        [colors]="humidityChartColors"
+        [legend]="tempChartLegend"
+        [chartType]="tempChartType"
+        [plugins]="tempChartPlugins">
+    </canvas>
+  </div>
+</div>
+<!-- {{ i }} - {{ hour?.temp }}
 <div class="container">
 <div class="card mb-4 box-shadow" style="width: 10rem;" *ngFor="let hour of currentForecast?.list; let i = index">
   <div class="card-body">
@@ -15,5 +42,5 @@
     <li class="list-group-item">Humidity: {{ hour.weather[0].description }}</li>
   </ul>
 </div>
-</div>
+</div> -->
 
