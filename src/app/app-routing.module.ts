@@ -5,12 +5,14 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { SevenDayForecastComponent } from './seven-day-forecast/seven-day-forecast.component';
 import { from } from 'rxjs';
+import { PastWeatherComponent } from './past-weather/past-weather.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent},
   { path: 'register', component: RegisterComponent },
-  { path: 'forecast', component: SevenDayForecastComponent}
+  { path: 'forecast', component: SevenDayForecastComponent},
+  { path: 'past-weather', component: PastWeatherComponent}
 ];
 
 @NgModule({
