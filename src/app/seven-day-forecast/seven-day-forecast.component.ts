@@ -20,7 +20,7 @@ export class SevenDayForecastComponent implements OnInit {
   constructor(private forecastService: SevenDayForecastService, private authService: AuthService, private elementRef: ElementRef) { }
 
   async ngOnInit() {
-    // Get the forecast from the service
+    // Get the forecast from the forecast service using hard coded zip
     this.currentForecast = <Object[]> await this.forecastService.getForecast('29150');
     this.currentUVForecast = <Object[]> await this.forecastService.getUVForecast('29150');
     this.fillTempChart(this.currentForecast);
