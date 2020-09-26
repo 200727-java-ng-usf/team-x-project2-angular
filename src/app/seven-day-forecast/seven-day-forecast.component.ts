@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { SevenDayForecastService } from '../services/seven-day-forecast.service';
 import { ChartOptions, ChartDataSets, Chart } from 'chart.js';
 import { Color, Label, SingleDataSet } from 'ng2-charts';
-import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'app-seven-day-forecast',
@@ -17,7 +17,7 @@ export class SevenDayForecastComponent implements OnInit {
   uvChart: Chart;
   favoriteLocations = [];
 
-  constructor(private forecastService: SevenDayForecastService, private authService: AuthService, private elementRef: ElementRef) { }
+  constructor(private forecastService: SevenDayForecastService, private elementRef: ElementRef) { }
 
   async ngOnInit() {
     // Get the forecast from the forecast service using hard coded zip

@@ -1,30 +1,46 @@
-import { Injectable } from '@angular/core';
-// Http Client
 import { HttpClient } from '@angular/common/http';
-// Observables
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-// Principal
 import { Principal } from '../models/principal';
-// Map
 import { map } from 'rxjs/operators';
-// Environment
+
 import { environment as env } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
+export class AccountService {
 
-export class AuthService {
-
-  private currentUserSubject: BehaviorSubject<Principal>;
-
-  currentUser$: Observable<Principal>;
+  private currentUserSubject: BehaviorSubject<Principal>
+  currentUser$: Observable<Principal>
 
   constructor(private http: HttpClient) {
-    console.log('Instantiating AuthService');
+    console.log('in AccountService.AccountService()');
     this.currentUserSubject = new BehaviorSubject<Principal>(null);
     this.currentUser$ = this.currentUserSubject.asObservable();
-    console.log('AuthService instantiation complete.');
+  }
+
+  register(username: string, password: string, firstName: string, lastName: string, email: string) {
+
+    console.log('in AccountService.register()');
+    let appUser = {username, password, firstName, lastName, email};
+
+    console.log(`sending app user ${appUser}, to ${env.USER_API_URL}/register`);
+
+    return this.http.post(`${env.USER_API_URL}/register`, appUser, {
+      headers: {
+        'Content-type': 'application/json'
+      },
+      observe: 'response'
+    }).pipe(
+
+      map(resp => {
+        let principal = resp.body as Principal;
+        this.currentUserSubject.next(principal);
+      })
+
+    );
+
   }
 
   get currentUserValue() {
@@ -32,7 +48,7 @@ export class AuthService {
   }
 
   authenticate(username: string, password: string) {
-    console.log('in authenticate()');
+    console.log('in AccountService.authenticate()');
 
     let credentials = { username, password };
 
@@ -55,4 +71,5 @@ export class AuthService {
     this.http.get(`${env.USER_API_URL}/auth`);
     this.currentUserSubject.next(null);
   }
+
 }
