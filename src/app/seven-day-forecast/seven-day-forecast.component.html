@@ -1,52 +1,25 @@
-
 <br/>
 <br/>
 <div class="container">
-  <div class="chartjs-container">
-    <h4>40 Hour Temperature Forecast: </h4>
-    <canvas baseChart
-        [datasets]="tempChartData"
-        [labels]="tempChartLabels"
-        [options]="tempChartOptions"
-        [colors]="tempChartColors"
-        [legend]="tempChartLegend"
-        [chartType]="tempChartType"
-        [plugins]="tempChartPlugins">
-    </canvas>
-  </div>
+<br/>
+<br/>
+<div class="chartjs-container">
+  <canvas id="tempChart"></canvas>
 </div>
 <br/>
-<div class="container">
-  <div class="chartjs-container">
-    <h4>40 Hour Humidity Forecast: </h4>
-    <canvas baseChart id="uvChart"
-        [datasets]="humidityChartData"
-        [labels]="tempChartLabels"
-        [options]="tempChartOptions"
-        [colors]="humidityChartColors"
-        [legend]="tempChartLegend"
-        [chartType]="tempChartType"
-        [plugins]="tempChartPlugins">
-    </canvas>
-  </div>
+<div class="chartjs-container">
+  <canvas id="humidityChart"></canvas>
+</div>
+<br/>
+<div class="chartjs-container">
+  <canvas id="uvChart"></canvas>
 </div>
 
 <br/>
-<div class="container">
-  <div class="chartjs-container">
-    <h4>8 Hour UV Index Forecast: </h4>
-    <canvas baseChart
-        [datasets]="uvChartData"
-        [labels]="uvChartLabels"
-        [options]="uvChartOptions"
-        [colors]="uvChartColors"
-        [legend]="uvChartLegend"
-        [chartType]="uvChartType"
-        [plugins]="uvChartPlugins">
-    </canvas>
-  </div>
-</div>
 
+
+
+</div>
 <!-- {{ i }} - {{ hour?.temp }} -->
 <!-- <div class="d-flex align-content-start flex-wrap">
   <div class="p-2 bd-highlight" *ngFor="let hour of currentForecast?.list; let i = index">
