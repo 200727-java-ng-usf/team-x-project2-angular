@@ -10,9 +10,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // Http Client Module
 import { HttpClientModule } from '@angular/common/http';
+// Charts
+import { ChartsModule } from 'ng2-charts';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+import { SevenDayForecastComponent } from './seven-day-forecast/seven-day-forecast.component';
 
 
 @NgModule({
@@ -21,7 +24,8 @@ import { RegisterComponent } from './register/register.component';
     LoginComponent,
     NavComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    SevenDayForecastComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +33,8 @@ import { RegisterComponent } from './register/register.component';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

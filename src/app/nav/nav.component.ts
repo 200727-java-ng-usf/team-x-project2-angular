@@ -9,7 +9,7 @@ import { AccountService } from '../services/account.service';
 export class NavComponent{
 
   constructor(private accountService: AccountService) {
-    
+
   }
 
   // Nav Links
@@ -25,6 +25,10 @@ export class NavComponent{
     {
       linkName: 'Register',
       fragment: '/register'
+    },
+    {
+      linkName: 'Forecast',
+      fragment: '/forecast'
     },
     {
       linkName: 'Profile',
