@@ -7,7 +7,9 @@ export const environment = {
   // TODO: insert correct User API url, aka Service Layer
   USER_API_URL: 'http://project2springapp-env.eba-f2bmdfth.us-east-2.elasticbeanstalk.com',
   OPEN_WEATHER_API_URL: 'https://api.openweathermap.org/data/2.5',
-  OPEN_WEATHER_API_KEY: '37be25ea7137d9eef8dfdbf6d70e1b23'
+  OPEN_WEATHER_API_KEY: '37be25ea7137d9eef8dfdbf6d70e1b23',
+  PAST_WEATHER_API_URL: 'https://api.meteostat.net',
+  PAST_WEATHER_API_KEY: 'vouELAGs6zgSdehEZb6emuihTEf32kPf' // Must be used in Header of Request
 };
 
 /*
