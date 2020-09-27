@@ -81,6 +81,8 @@ export class PastWeatherComponent implements OnInit {
   async getHistory(){
     if(this.gotHistoryData){
       this.tempChart.destroy();
+      this.humidityChart.destroy();
+      this.rainChart.destroy();
     }
     if(this.historyFields.hourlyDaily.value == 'hourly'){
       this.fillHourlyHistoryCharts();
@@ -93,9 +95,6 @@ export class PastWeatherComponent implements OnInit {
   }
   async fillDailyHistoryCharts(){
     if(this.historyFields.endDate.value < this.historyFields.startDate.value){
-      return;
-    }
-    if(this.historyFields.endDate.value - this.historyFields.startDate.value > 10){
       return;
     }
     console.log(this.historyFields.endDate.value);
@@ -154,9 +153,6 @@ export class PastWeatherComponent implements OnInit {
     if(this.historyFields.endDate.value < this.historyFields.startDate.value){
       return;
     }
-    if(this.historyFields.endDate.value - this.historyFields.startDate.value > 10){
-      return;
-    }
     console.log(this.historyFields.endDate.value);
     console.log(this.historyFields.startDate.value);
     console.log(this.historyFields.hourlyDaily.value);
@@ -172,9 +168,13 @@ export class PastWeatherComponent implements OnInit {
       this.gotHistoryData = true;
       let tempLabels: Label[] = [];
       let tempData = [];
+      let humidityData = [];
+      let rainData = [];
       for(let i = 0; i < historySet.data.length; i++ ){
         tempLabels[i] = historySet.data[i].time;
         tempData[i] = historySet.data[i].temp;
+        humidityData[i] = historySet.data[i].rhum;
+        rainData[i] = historySet.data[i].dwpt;
       };
       this.gotHistoryData = true;
       this.tempChart = new Chart('tempChart', {
@@ -199,6 +199,62 @@ export class PastWeatherComponent implements OnInit {
           datasets: [{
             label: 'temperature',
             data: tempData,
+            backgroundColor: 'rgba(21, 255, 255, 0.5)',
+            borderColor: 'black',
+            borderWidth: 2
+          }]
+        }
+      });
+      this.humidityChart = new Chart('humidityChart', {
+        type: 'line',
+        options: {
+          responsive: true,
+          tooltips: {
+            mode: 'index',
+            intersect: false
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+          title: {
+            display: true,
+            text: 'Dewpoint History by Hour'
+          }
+        },
+        data: {
+          labels: tempLabels,
+          datasets: [{
+            label: 'Humidity %',
+            data: humidityData,
+            backgroundColor: 'rgba(21, 255, 255, 0.5)',
+            borderColor: 'black',
+            borderWidth: 2
+          }]
+        }
+      });
+      this.rainChart = new Chart('rainChart', {
+        type: 'line',
+        options: {
+          responsive: true,
+          tooltips: {
+            mode: 'index',
+            intersect: false
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+          title: {
+            display: true,
+            text: 'Percipitaion History by Hour'
+          }
+        },
+        data: {
+          labels: tempLabels,
+          datasets: [{
+            label: 'percipitaion',
+            data: rainData,
             backgroundColor: 'rgba(21, 255, 255, 0.5)',
             borderColor: 'black',
             borderWidth: 2
