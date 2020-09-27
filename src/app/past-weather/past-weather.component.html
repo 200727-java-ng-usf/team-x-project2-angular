@@ -1,3 +1,43 @@
 <br/>
 <br/>
-<p>past-weather works!</p>
+<div id="search-container">
+  <form [formGroup]="searchForm" (ngSubmit)="searchForCity()">
+    <div class="form-group">
+      <label for="search-box">Search for Station By City Name:</label>
+      <input id="search-box" type="text" class="form-control" formControlName="searchTerm"/>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" [disabled]="">Search</button>
+      <img id="loading-img" src="assets/loading-star.gif" *ngIf="searching"/>
+    </div>
+  </form>
+</div>
+<div *ngIf="foundStation">
+  <form [formGroup]="historyForm" (ngSubmit)="getHistory()">
+    <div class="form-group">
+      <select class="form-control" id="hourly-daily" formControlName="hourlyDaily">
+        <option>hourly</option>
+        <option>daily</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <select class="form-control" id="selected-station" formControlName="selectedStation">
+        <option *ngFor="let station of stations; let i = index" value="{{station.id}}">
+          Name: {{ station.name.en }},
+          State: {{ station.region }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="startDate">From Date:</label>
+      <input class="form-control" type="date" formControlName="startDate" id="start-date"/>
+    </div>
+    <div class="form-group">
+      <label for="endDate">To Date:</label>
+      <input class="form-control" type="date" formControlName="endDate" id="end-date"/>
+    </div>
+    <button type="submit" >Get History</button>
+  </form>
+</div>
+
+

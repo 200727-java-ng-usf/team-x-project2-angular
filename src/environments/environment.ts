@@ -9,6 +9,7 @@ export const environment = {
   OPEN_WEATHER_API_URL: 'https://api.openweathermap.org/data/2.5',
   OPEN_WEATHER_API_KEY: '37be25ea7137d9eef8dfdbf6d70e1b23',
   PAST_WEATHER_API_URL: 'https://api.meteostat.net',
+  PAST_WEATHER_SEARCH_API_URL: 'https://api.meteostat.net/v2/stations/search?query=',
   PAST_WEATHER_API_KEY: 'vouELAGs6zgSdehEZb6emuihTEf32kPf' // Must be used in Header of Request
 };
 
