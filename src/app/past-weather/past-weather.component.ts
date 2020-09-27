@@ -3,7 +3,10 @@ import { PastWeatherService } from '../services/past-weather.service';
 import { FormBuilder, FormGroup, Validators, Form, FormControl } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { StationReturn } from '../models/station';
-
+import { HourlyHistDataPoint } from '../models/hourly-past';
+import { DailyHistDataPoint } from '../models/daily-past';
+import { ChartOptions, ChartDataSets, Chart } from 'chart.js';
+import { Color, Label, SingleDataSet } from 'ng2-charts';
 @Component({
   selector: 'app-past-weather',
   templateUrl: './past-weather.component.html',
@@ -17,9 +20,13 @@ export class PastWeatherComponent implements OnInit {
   foundStation = false;
   submitted = false;
   loading = false;
+  gotHistoryData = false;
   stations = [];
   hourlyDaily: FormControl;
 
+  tempChart: Chart;
+  humidityChart: Chart;
+  rainChart: Chart;
   constructor(private pastWeatherService: PastWeatherService, private formBuilder: FormBuilder) {
 
    }
@@ -72,10 +79,133 @@ export class PastWeatherComponent implements OnInit {
   }
 
   async getHistory(){
+    if(this.gotHistoryData){
+      this.tempChart.destroy();
+    }
+    if(this.historyFields.hourlyDaily.value == 'hourly'){
+      this.fillHourlyHistoryCharts();
+    }
+    if(this.historyFields.hourlyDaily.value == 'daily'){
+      this.fillDailyHistoryCharts();
+    }
 
+
+  }
+  async fillDailyHistoryCharts(){
+    if(this.historyFields.endDate.value < this.historyFields.startDate.value){
+      return;
+    }
+    if(this.historyFields.endDate.value - this.historyFields.startDate.value > 10){
+      return;
+    }
     console.log(this.historyFields.endDate.value);
     console.log(this.historyFields.startDate.value);
     console.log(this.historyFields.hourlyDaily.value);
     console.log(this.historyFields.selectedStation.value);
+    let historySet = <DailyHistDataPoint> await this.pastWeatherService
+      .getHistory(
+        this.historyFields.hourlyDaily.value,
+        this.historyFields.selectedStation.value,
+        this.historyFields.startDate.value,
+        this.historyFields.endDate.value,
+      );
+    if (historySet){
+      this.gotHistoryData = true;
+      let tempLabels: Label[] = [];
+      let tempData = [];
+      for(let i = 0; i < historySet.data.length; i++ ){
+        tempLabels[i] = historySet.data[i].date;
+        tempData[i] = historySet.data[i].tavg;
+      };
+      this.gotHistoryData = true;
+      this.tempChart = new Chart('tempChart', {
+        type: 'line',
+        options: {
+          responsive: true,
+          tooltips: {
+            mode: 'index',
+            intersect: false
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+          title: {
+            display: true,
+            text: 'Average Daily Temperature'
+          }
+        },
+        data: {
+          labels: tempLabels,
+          datasets: [{
+            label: 'temperature',
+            data: tempData,
+            backgroundColor: 'rgba(21, 255, 255, 0.5)',
+            borderColor: 'black',
+            borderWidth: 2
+          }]
+        }
+      });
+    }
+    console.log(historySet.data);
+    }
+
+  async fillHourlyHistoryCharts(){
+    if(this.historyFields.endDate.value < this.historyFields.startDate.value){
+      return;
+    }
+    if(this.historyFields.endDate.value - this.historyFields.startDate.value > 10){
+      return;
+    }
+    console.log(this.historyFields.endDate.value);
+    console.log(this.historyFields.startDate.value);
+    console.log(this.historyFields.hourlyDaily.value);
+    console.log(this.historyFields.selectedStation.value);
+    let historySet = <HourlyHistDataPoint> await this.pastWeatherService
+      .getHistory(
+        this.historyFields.hourlyDaily.value,
+        this.historyFields.selectedStation.value,
+        this.historyFields.startDate.value,
+        this.historyFields.endDate.value,
+      );
+    if (historySet){
+      this.gotHistoryData = true;
+      let tempLabels: Label[] = [];
+      let tempData = [];
+      for(let i = 0; i < historySet.data.length; i++ ){
+        tempLabels[i] = historySet.data[i].time;
+        tempData[i] = historySet.data[i].temp;
+      };
+      this.gotHistoryData = true;
+      this.tempChart = new Chart('tempChart', {
+        type: 'line',
+        options: {
+          responsive: true,
+          tooltips: {
+            mode: 'index',
+            intersect: false
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+          title: {
+            display: true,
+            text: 'Temperature History by Hour'
+          }
+        },
+        data: {
+          labels: tempLabels,
+          datasets: [{
+            label: 'temperature',
+            data: tempData,
+            backgroundColor: 'rgba(21, 255, 255, 0.5)',
+            borderColor: 'black',
+            borderWidth: 2
+          }]
+        }
+      });
+    }
+    console.log(historySet.data);
   }
 }

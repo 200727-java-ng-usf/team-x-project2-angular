@@ -15,12 +15,7 @@
 <div *ngIf="foundStation">
   <form [formGroup]="historyForm" (ngSubmit)="getHistory()">
     <div class="form-group">
-      <select class="form-control" id="hourly-daily" formControlName="hourlyDaily">
-        <option>hourly</option>
-        <option>daily</option>
-      </select>
-    </div>
-    <div class="form-group">
+      <label for="selected-station"> Choose a Station:</label>
       <select class="form-control" id="selected-station" formControlName="selectedStation">
         <option *ngFor="let station of stations; let i = index" value="{{station.id}}">
           Name: {{ station.name.en }},
@@ -28,6 +23,18 @@
         </option>
       </select>
     </div>
+
+    <div class="form-group">
+      <label for="selected-station"> Choose Hourly(10 days) or Daily(370 days):</label>
+      <select class="form-control" id="hourly-daily" formControlName="hourlyDaily">
+        <option>hourly</option>
+        <option>daily</option>
+      </select>
+    </div>
+
+    <!-- max of 10 days for hourly -->
+    <!-- Daily data can be queried for a maximum of 370 days per reque -->
+    <h5>Select Dates:</h5>
     <div class="form-group">
       <label for="startDate">From Date:</label>
       <input class="form-control" type="date" formControlName="startDate" id="start-date"/>
@@ -36,8 +43,24 @@
       <label for="endDate">To Date:</label>
       <input class="form-control" type="date" formControlName="endDate" id="end-date"/>
     </div>
-    <button type="submit" >Get History</button>
+    <button type="submit" class="btn btn-primary">Get History</button>
   </form>
 </div>
 
+<div>
+  <div class="container">
+    <br/>
+    <br/>
+    <div class="chartjs-container">
+      <canvas #canvas id="tempChart"></canvas>
+    </div>
+    <br/>
+    <div class="chartjs-container">
+      <canvas id="humidityChart"></canvas>
+    </div>
+    <br/>
+    <div class="chartjs-container">
+      <canvas id="rainChart"></canvas>
+    </div>
+</div>
 

@@ -19,5 +19,13 @@ export class PastWeatherService {
     }).toPromise();
   }
 
+  async getHistory(hourlyDaily: string, station: string, start: string, end: string){
+    return await this.http.get(env.PAST_WEATHER_API_URL + hourlyDaily + '?station=' + station + '&start=' + start + '&end=' + end, {
+      headers:
+      {
+        'x-api-key': env.PAST_WEATHER_API_KEY
+      }
+    }).toPromise();
+  }
 
 }
