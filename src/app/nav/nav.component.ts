@@ -33,6 +33,10 @@ export class NavComponent{
     {
       linkName: 'Profile',
       fragment: '/profile'
+    },
+    {
+      linkName: 'Past Weather',
+      fragment: '/past-weather'
     }
   ];
 }

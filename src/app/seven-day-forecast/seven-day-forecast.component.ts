@@ -94,7 +94,7 @@ export class SevenDayForecastComponent implements OnInit {
       let subStr = str.substring(5, str.length - 3);
       humidityLabels[i] = subStr;
     }
-    this.tempChart = new Chart('humidityChart', {
+    this.humidityChart = new Chart('humidityChart', {
       type: 'line',
       data: {
           labels: humidityLabels,
