@@ -17,6 +17,7 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { SevenDayForecastComponent } from './seven-day-forecast/seven-day-forecast.component';
 import { PastWeatherComponent } from './past-weather/past-weather.component';
+import { SunriseSunsetComponent } from './sunrise-sunset/sunrise-sunset.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { PastWeatherComponent } from './past-weather/past-weather.component';
     HomeComponent,
     RegisterComponent,
     SevenDayForecastComponent,
-    PastWeatherComponent
+    PastWeatherComponent,
+    SunriseSunsetComponent
   ],
   imports: [
     BrowserModule,
