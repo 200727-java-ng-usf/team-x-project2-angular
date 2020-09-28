@@ -37,6 +37,10 @@ export class NavComponent{
     {
       linkName: 'Past Weather',
       fragment: '/past-weather'
+    },
+    {
+      linkName: 'Sunrise/ Sunset',
+      fragment: '/rise-set'
     }
   ];
 }
