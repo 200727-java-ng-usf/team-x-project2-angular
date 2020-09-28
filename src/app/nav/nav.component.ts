@@ -41,6 +41,10 @@ export class NavComponent{
     {
       linkName: 'Sunrise/ Sunset',
       fragment: '/rise-set'
+    },
+    {
+      linkName: 'Moon Phase',
+      fragment: '/moon-phase'
     }
   ];
 }
