@@ -1,5 +1,6 @@
 export class Principal {
-  id: number;
+  userId: number;
   username: string;
-  role: string;
+  userRole: string;
+  home: {};
 }
