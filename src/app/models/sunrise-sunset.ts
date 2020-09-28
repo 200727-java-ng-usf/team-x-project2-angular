@@ -10,7 +10,7 @@ export class SunriseSunset{
     civil_twilight_end: Time;
     nautical_twilight_begin: Time;
     nautical_twilight_end: Time;
-    astronomical_twilight_begi: Time;
+    astronomical_twilight_begin: Time;
     astronomical_twilight_end: Time;
   };
   status: string;
