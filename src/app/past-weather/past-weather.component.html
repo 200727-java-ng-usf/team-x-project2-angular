@@ -1,0 +1,93 @@
+<br/>
+<br/>
+<div id="search-container" class="container-fluid">
+  <form [formGroup]="searchForm" (ngSubmit)="searchForCity()">
+    <div class="form-group">
+      <label for="search-box">Search for Station By City Name:</label>
+      <input id="search-box" type="text" class="form-control" formControlName="searchTerm" />
+      <div class="alert alert-warning" role="alert" *ngIf="searchForm.touched && searchTerm.invalid">
+        <strong>Search term is required!</strong>
+      </div>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" [disabled]="!searchForm.valid">Search</button>
+      <img id="loading-img" src="assets/loading-star.gif" *ngIf="searching"/>
+    </div>
+  </form>
+  <div class="alert alert-warning" role="alert" *ngIf="badStation">
+    <strong>Sorry we could not find any stations, please try again using a city name</strong>
+  </div>
+</div>
+
+<div *ngIf="foundStation" class="container-fluid">
+  <form [formGroup]="historyForm" (ngSubmit)="getHistory()">
+    <div class="form-group">
+      <label for="selected-station"> Choose a Station:</label>
+      <select class="form-control" id="selected-station" formControlName="selectedStation" required required>
+        <option *ngFor="let station of stations; let i = index" value="{{station.id}}">
+          Name: {{ station.name.en }},
+          State: {{ station.region }}
+        </option>
+      </select>
+      <div *ngIf="historyForm.touched && selectedStation.invalid" class="alert alert-warning" role="alert">
+        <strong>Station is required!</strong>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="selected-station"> Choose Hourly(10 days) or Daily(370 days):</label>
+      <select class="form-control" id="hourly-daily" formControlName="hourlyDaily" required required>
+        <option>hourly</option>
+        <option>daily</option>
+      </select>
+      <div *ngIf="historyForm.touched && hourlyDaily.invalid" class="alert alert-warning" role="alert">
+        <strong>Station is required!</strong>
+      </div>
+    </div>
+
+    <!-- max of 10 days for hourly -->
+    <!-- Daily data can be queried for a maximum of 370 days per reque -->
+    <div class="form-group">
+      <ngb-datepicker #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
+      </ngb-datepicker>
+
+      <ng-template #t let-date let-focused="focused">
+        <span class="custom-day"
+              [class.focused]="focused"
+              [class.range]="isRange(date)"
+              [class.faded]="isHovered(date) || isInside(date)"
+              (mouseenter)="hoveredDate = date"
+              (mouseleave)="hoveredDate = null">
+          {{ date.day }}
+        </span>
+      </ng-template>
+      <div class="alert alert-warning" role="alert" *ngIf="!dateValid && historyForm.valid && historyForm.touched" >
+        <strong>Please choose less than 10 days for hourly, or less than 370 days for daily!</strong>
+      </div>
+    </div>
+    <br/>
+    <button type="submit" class="btn btn-primary" [disabled]="!dateValid && !historyForm.valid" >Get History</button>
+    <img id="loading-img" src="assets/loading-star.gif" *ngIf="gettingHistory"/>
+  </form>
+
+  <!-- charts -->
+  <div *ngIf="dataSetEmpty" class="alert alert-warning" role="alert">
+    <strong>Sorry we could not find any data, please try a different station or different dates</strong>
+  </div>
+  <div>
+    <div class="container-fluid">
+      <br/>
+      <br/>
+      <div class="chartjs-container">
+        <canvas #canvas id="tempChart"></canvas>
+      </div>
+      <br/>
+      <div class="chartjs-container">
+        <canvas id="humidityChart"></canvas>
+      </div>
+      <br/>
+      <div class="chartjs-container">
+        <canvas id="rainChart"></canvas>
+      </div>
+  </div>
+</div>

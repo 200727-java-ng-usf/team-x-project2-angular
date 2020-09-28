@@ -1,0 +1,60 @@
+<!--  as a user, I want to see a home
+      screen with the current weather displayed -->
+<div id="home-container" class="container">
+  <div>
+    <h2>Welcome</h2>
+  </div>
+  <div *ngIf='resultFound()'>
+    <div class="card p-4">
+      <h2>Current Weather for {{ currentWeather.name }}: </h2>
+      <br/>
+      <div>
+        <h4>Current Temperature:</h4>
+        <h5>{{(currentWeather.main?.temp - 273.15)*1.8 + 32 | number:'1.0-0'}}<sup>o</sup>F</h5>
+      </div>
+      <div>
+        <h4>Humidity:</h4>
+        <h6>{{currentWeather.main?.humidity}}%</h6>
+      </div>
+      <div>
+        <h4>Pressure:</h4>
+        <h6>{{currentWeather.main?.pressure}}mb</h6>
+      </div>
+      <div>
+        <h4>Clouds:</h4>
+        <h6>{{currentWeather.clouds?.all}}%</h6>
+      </div>
+      <div>
+        <h4>{{ currentWeatherDescription | titlecase }}</h4>
+      </div>
+      <!-- switch based on weather: description -->
+      <div class="text-center">
+        <div *ngIf='thunderstorm'>
+          <img src="assets/svg/wi-thunderstorm.svg" alt="thunderstorm clouds" class="img-thumbnail">
+        </div>
+        <div *ngIf='drizzle'>
+          <img src="assets/svg/wi-sprinkle.svg" alt="drizzle clouds" class="img-thumbnail">
+        </div>
+        <div *ngIf='rain'>
+          <img src="assets/svg/wi-rain.svg" alt="rain clouds" class="img-thumbnail">
+        </div>
+        <div *ngIf='snow'>
+          <img src="assets/svg/wi-snow.svg" alt="snow image" class="img-thumbnail">
+        </div>
+        <div *ngIf='clear'>
+          <img src="assets/svg/wi-day-sunny.svg" alt="clear sky image" class="img-thumbnail">
+        </div>
+        <div *ngIf='clouds'>
+          <img src="assets/svg/wi-cloud.svg" alt="clouds image" class="img-thumbnail">
+        </div>
+        <div *ngIf='atmosphere'>
+          <img src="assets/svg/wi-smog.svg" alt="atmosphere image" class="img-thumbnail">
+        </div>
+      </div>
+  </div>
+
+  </div>
+  <div *ngIf='!resultFound()'>
+    <h1 class="center">Failed to get weather</h1>
+  </div>
+</div>

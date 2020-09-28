@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand">Day/Break</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+  data-target="#nav-links" aria-controls="nav-links"
+  aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="nav-links">
+      <ul class="navbar-nav mr-auto">
+          <li *ngFor="let link of navLinks" class="nav-item active">
+              <a class="nav-link" [routerLink]="link.fragment">{{ link.linkName }}</a>
+          </li>
+          <!-- <li ngbDropdown class="nav-item dropdown">
+              <span ngbDropdownToggle class="nav-link dropdown-toggle" id="nav-dropdown">Views</span>
+              <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="nav-dropdown">
+                  <a class="dropdown-item" *ngFor="let link of navLinks" [routerLink]="link.fragment">{{ link.linkName }}</a>
+              </div>
+          </li> -->
+      </ul>
+  </div>
+</nav>
