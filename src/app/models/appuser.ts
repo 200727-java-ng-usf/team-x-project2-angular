@@ -6,4 +6,6 @@ export class AppUser {
     firstName: string;
     lastName: string;
     email: string;
+    zipCode: string;
+    locations: [];
 }
