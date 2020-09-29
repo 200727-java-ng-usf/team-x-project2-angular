@@ -1,1 +1,22 @@
-<p>moon-phase works!</p>
+<br/>
+<br/>
+
+<h3>Moon Forecast: </h3>
+
+<div *ngFor="let day of moonPhase; let i = index " class="container-fluid">
+  <div>
+    Date: {{ day.date }}
+  </div>
+  <div>
+    Moon Phase: {{ day.phase | number}}
+
+  </div>
+  <div>
+    Moon Fraction: {{ day.fraction | number}}
+    <img src="${{day.iconLink}}" alt=""/>
+  </div>
+  <div>
+    Moon Angle: {{ day.angle | number}}
+  </div>
+  <br/>
+</div>
