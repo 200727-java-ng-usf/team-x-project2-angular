@@ -9,11 +9,12 @@
   </div>
   <div>
     Moon Phase: {{ day.phase | number}}
-
+    <i class="{{ day.iconLink }}"></i>
   </div>
   <div>
     Moon Fraction: {{ day.fraction | number}}
-    <img src="${{day.iconLink}}" alt=""/>
+
+
   </div>
   <div>
     Moon Angle: {{ day.angle | number}}
