@@ -1,9 +1,9 @@
 <br/>
 <br/>
 
-<h3>Moon Forecast: </h3>
+<h3>10 Day Moon Forecast: </h3>
 
-<div *ngFor="let day of moonPhase; let i = index " class="container-fluid">
+<!-- <div *ngFor="let day of moonPhase; let i = index " class="container-fluid">
   <div>
     Date: {{ day.date }}
   </div>
@@ -20,4 +20,31 @@
     Moon Angle: {{ day.angle | number}}
   </div>
   <br/>
+</div> -->
+<div class="card-column container" >
+  <div class="card container" *ngFor="let day of moonPhase; let i = index ">
+    <i class="{{ day.iconLink.link }} text-center"></i>
+    <div class="card-body">
+      <h4 class="card-title">
+        Moon Phase: {{ day.iconLink.friendlyName  }}
+      </h4>
+
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          Date: {{ day.date }}
+        </li>
+        <li class="list-group-item">
+          Moon Phase: {{ day.phase | number}}
+        </li>
+        <li class="list-group-item">
+          Moon Percentage: {{ day.fraction | percent}}
+        </li>
+        <li class="list-group-item">
+          Moon Angle: {{ day.angle | number}}
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
+
+
