@@ -25,9 +25,10 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/weather-icons/weather-icons/weather-icons.less"
             ],
-            "scripts": []
+            "scripts": ["node_modules/suncalc/suncalc.js"]
           },
           "configurations": {
             "production": {
