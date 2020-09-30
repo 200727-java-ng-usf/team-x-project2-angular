@@ -21,4 +21,10 @@ export class SevenDayForecastService {
 
     }).toPromise();
   }
+  async getGovStations(){
+
+  }
+  async getHourlyForecast(lat: number, lon: number, station: string){
+    let hourlyForecastWeatherCall = env.WEATHER_GOV_API_URL + '/gridpoints/' + station + '/' + lat + ',' + lon + 'forecast/hourly';
+  }
 }
