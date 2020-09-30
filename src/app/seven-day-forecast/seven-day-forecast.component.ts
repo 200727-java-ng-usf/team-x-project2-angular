@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ForecastService } from '../services/forecast.service';
 import { ChartOptions, ChartDataSets, Chart } from 'chart.js';
 import { Color, Label, SingleDataSet } from 'ng2-charts';
-
+import { Forecast } from '../models/daily-forecast';
 
 @Component({
   selector: 'app-seven-day-forecast',
@@ -10,16 +10,17 @@ import { Color, Label, SingleDataSet } from 'ng2-charts';
   styleUrls: ['./seven-day-forecast.component.css']
 })
 export class SevenDayForecastComponent implements OnInit {
-  currentForecast: any = <any>{};
+  currentForecast: Forecast;
   currentUVForecast: any = <any>{};
-
+  gotForecast = false;
   favoriteLocations = [];
 
   constructor(private forecastService: ForecastService, private elementRef: ElementRef) { }
 
   async ngOnInit() {
     // Get the forecast from the forecast service using hard coded zip
-    this.currentForecast = <Object[]> await this.forecastService.getDailyForecast('29150');
+    this.currentForecast = <Forecast> await this.forecastService.getDailyForecast('29150');
+    this.gotForecast = true;
     this.currentUVForecast = <Object[]> await this.forecastService.getUVForecast('29150');
     this.fillTempChart(this.currentForecast);
     this.fillHumidityChart(this.currentForecast);
