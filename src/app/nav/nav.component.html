@@ -10,7 +10,16 @@
   <div class="collapse navbar-collapse" id="nav-links">
       <ul class="navbar-nav mr-auto">
           <li *ngFor="let link of navLinks" class="nav-item active">
-              <a class="nav-link" [routerLink]="link.fragment">{{ link.linkName }}</a>
+                <a class="nav-link" [routerLink]="link.fragment">{{ link.linkName }}</a>
+          </li>
+          <li *ngFor="let link of navLinksForNonAuthenticated" class="nav-item active">
+                <a *ngIf="!currentUserSubject.value" class="nav-link" [routerLink]="link.fragment">{{ link.linkName }}</a>
+          </li>
+          <li *ngIf="currentUserSubject.value" class="nav-item active">
+            <a class="nav-link" [routerLink]="navLinksForAuthenticated[0].fragment">Profile</a>
+          </li>
+          <li *ngIf="currentUserSubject.value" class="nav-item active">
+              <a class="nav-link" (click)="logout()" [routerLink]="navLinks[0].fragment">Logout</a>
           </li>
           <!-- <li ngbDropdown class="nav-item dropdown">
               <span ngbDropdownToggle class="nav-link dropdown-toggle" id="nav-dropdown">Views</span>

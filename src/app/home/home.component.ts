@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HomeForecastService } from '../services/home-forecast.service';
 import { AccountService } from '../services/account.service';
 import { Principal } from '../models/principal';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -21,10 +22,10 @@ export class HomeComponent implements OnInit {
   clouds = false;
   atmosphere = false;
 
-  principal: Principal;
+  currentUserSubject: BehaviorSubject<Principal>
 
   constructor(private hFService: HomeForecastService, private accountService: AccountService) { 
-    this.principal = this.accountService.currentUserValue;
+    this.currentUserSubject = accountService.getCurrentUserSubject();
    }
 
   async ngOnInit() {

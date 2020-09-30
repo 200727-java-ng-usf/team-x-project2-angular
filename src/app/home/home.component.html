@@ -1,8 +1,8 @@
 <!--  as a user, I want to see a home
       screen with the current weather displayed -->
 <div id="home-container" class="container">
-  <div><br><br>
-    <h2>Welcome {{ principal.username }}</h2>
+  <div>
+    <h2 *ngIf="this.currentUserSubject.value">Welcome {{ this.currentUserSubject.value.username }}</h2>
   </div>
   <div *ngIf='resultFound()'>
     <div class="card p-4">

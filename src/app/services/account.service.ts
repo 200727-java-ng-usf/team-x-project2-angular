@@ -48,6 +48,10 @@ export class AccountService {
     return this.currentUserSubject.value;
   }
 
+  getCurrentUserSubject() {
+    return this.currentUserSubject;
+  }
+
   authenticate(username: string, password: string) {
     console.log('in AccountService.authenticate()');
 
