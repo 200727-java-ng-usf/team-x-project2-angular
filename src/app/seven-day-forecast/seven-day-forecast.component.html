@@ -36,7 +36,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let hour of currentForecast.list; let i = index">
-        <td>: {{hour.weather[0].main}}</td>
+        <td>{{hour.weather[0].main}}</td>
         <td>{{hour.dt}}</td>
         <td>{{ hour.main.feels_like }}</td>
         <td>{{hour.weather[0].description}}</td>
