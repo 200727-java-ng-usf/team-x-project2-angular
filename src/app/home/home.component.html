@@ -2,7 +2,7 @@
       screen with the current weather displayed -->
 <div id="home-container" class="container">
   <div>
-    <h2>Welcome</h2>
+    <h2 *ngIf="this.currentUserSubject.value">Welcome {{ this.currentUserSubject.value.username }}</h2>
   </div>
   <div *ngIf='resultFound()'>
     <div class="card p-4">
