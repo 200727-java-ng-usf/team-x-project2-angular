@@ -6,7 +6,7 @@ import { environment as env } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class SevenDayForecastService {
+export class ForecastService {
 
   constructor(private http: HttpClient) { }
 
@@ -30,7 +30,7 @@ export class SevenDayForecastService {
       }
     }).toPromise();
   }
-  async getHourlyForecast(email: string, lat: number, lon: number, station: string){
+  async getGovHourlyForecast(email: string, lat: number, lon: number, station: string){
     let hourlyForecastWeatherCall = env.WEATHER_GOV_API_URL + '/gridpoints/' + station + '/' + lat + ',' + lon + 'forecast/hourly';
     return await this.http.get(hourlyForecastWeatherCall, {
       headers: {
