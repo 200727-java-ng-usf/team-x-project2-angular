@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeForecastService } from '../services/home-forecast.service';
+import { AccountService } from '../services/account.service';
+import { Principal } from '../models/principal';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +21,12 @@ export class HomeComponent implements OnInit {
   clear = false;
   clouds = false;
   atmosphere = false;
-  constructor(private hFService: HomeForecastService) { }
+
+  currentUserSubject: BehaviorSubject<Principal>
+
+  constructor(private hFService: HomeForecastService, private accountService: AccountService) { 
+    this.currentUserSubject = accountService.getCurrentUserSubject();
+   }
 
   async ngOnInit() {
     // harcoded zipcode for now, will get from current user

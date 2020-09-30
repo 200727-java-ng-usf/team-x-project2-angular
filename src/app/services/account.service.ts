@@ -25,9 +25,9 @@ export class AccountService {
     console.log('in AccountService.register()');
     let appUser = {username, password, firstName, lastName, email};
 
-    console.log(`sending app user ${appUser}, to ${env.USER_API_URL}/register`);
+    console.log(`sending app user ${appUser}, to ${env.USER_API_URL}/users as POST`);
 
-    return this.http.post(`${env.USER_API_URL}/register`, appUser, {
+    return this.http.post(`${env.USER_API_URL}/users`, appUser, {
       headers: {
         'Content-type': 'application/json'
       },
@@ -35,6 +35,7 @@ export class AccountService {
     }).pipe(
 
       map(resp => {
+        console.log("RESP: " + resp);
         let principal = resp.body as Principal;
         this.currentUserSubject.next(principal);
       })
@@ -47,12 +48,16 @@ export class AccountService {
     return this.currentUserSubject.value;
   }
 
+  getCurrentUserSubject() {
+    return this.currentUserSubject;
+  }
+
   authenticate(username: string, password: string) {
     console.log('in AccountService.authenticate()');
 
     let credentials = { username, password };
 
-    console.log(`sending credentials, ${credentials}, to ${env.USER_API_URL}/auth`);
+    console.log(`sending credentials, ${credentials}, to ${env.USER_API_URL}/auth as POST`);
 
     return this.http.post(`${env.USER_API_URL}/auth`, credentials, {
       headers: {
