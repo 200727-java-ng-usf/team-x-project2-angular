@@ -1,56 +1,37 @@
 <br/>
 <br/>
 
-<div class="container-fluid" *ngIf="gotRiseSet">
-  <div class="card">
-    <img class="card-img-top" src="../../assets/svg/wi-sunrise.svg" alt="Card image cap">
-    <div class="card-body">
-      <h4 class="card-title">Sunrise Sunset Times: </h4>
-      <p class="card-text">For home location</p>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
-        Sunrise: {{ riseSet.results.sunrise }}
-      </li>
-      <li class="list-group-item">
-        Sunset: {{ riseSet.results.sunset }}
-      </li>
-      <li class="list-group-item">
-        Solar Noon: {{ riseSet.results.solar_noon }}
-      </li>
-      <li class="list-group-item">
-        Day Length: {{ riseSet.results.day_length }}
-      </li>
-      <li class="list-group-item">
-        Civil Twilight Start: {{ riseSet.results.civil_twilight_begin }}
-      </li>
-      <li class="list-group-item">
-        Civil Twilight End: {{ riseSet.results.civil_twilight_end }}
-      </li>
-      <li class="list-group-item">
-        Nautical Twilight Start: {{ riseSet.results.nautical_twilight_begin }}
-      </li>
-      <li class="list-group-item">
-        Nautical Twilight End: {{ riseSet.results.nautical_twilight_end }}
-      </li>
-      <li class="list-group-item">
-        Astronomical Twilight Start: {{ riseSet.results.nautical_twilight_begin }}
-      </li>
-      <li class="list-group-item">
-        Astronomical Twilight Sta: {{ riseSet.results.nautical_twilight_end }}
-      </li>
-    </ul>
-  </div>
-</div>
-<div class="container-fluid" *ngIf="gotRiseSet">
-  <form [formGroup]="updateForm" (ngSubmit)="updateDay()">
-    Choose a different day:
-    <input class="form-control" type="date" name="newDate" id="newDate" formControlName="newDate" required value="{{today | date}}">
-    <button type="submit" class="btn btn-primary" [disabled]="!updateForm.touched">Update</button>
-  </form>
-</div>
-<div >
+
+<table class="table table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th>Date</th>
+      <th>Sunrise </th>
+      <th>Sunset </th>
+      <th>Solar Noon</th>
+      <th>Sunset</th>
+      <th>Golden Hour</th>
+      <th>Golden Hour End</th>
+      <th>Dusk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let day of riseSetForecast; let i = index">
+      <td>{{ day.dawn | date }}</td>
+      <td>{{ day.dawn.toLocaleTimeString() }}</td>
+      <td>{{ day.sunrise.toLocaleTimeString()}}</td>
+      <td>{{ day.solarNoon.toLocaleTimeString() }}</td>
+      <td>{{ day.sunset.toLocaleTimeString() }}</td>
+      <td>{{ day.goldenHour.toLocaleTimeString() }}</td>
+      <td>{{ day.goldenHourEnd.toLocaleTimeString() }}</td>
+      <td>{{ day.dusk.toLocaleTimeString() }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- <div >
   <div class="alert alert-warning" role="alert" *ngIf="updateForm.touched && !updateForm.valid">
     <strong>Bad Date Entered!</strong> please try again!
   </div>
-</div>
+</div> -->
+

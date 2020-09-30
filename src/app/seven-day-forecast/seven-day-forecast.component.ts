@@ -5,6 +5,7 @@ import { ChartOptions, ChartDataSets, Chart } from 'chart.js';
 import { Color, Label, SingleDataSet } from 'ng2-charts';
 import { Forecast } from '../models/daily-forecast';
 import { StationReturn } from '../models/forecastStation';
+import { Principal } from '../models/principal';
 
 @Component({
   selector: 'app-seven-day-forecast',

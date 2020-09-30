@@ -3,10 +3,10 @@ export class Principal {
   username: string;
   userRole: string;
   home: {
-    id: string;
+    locationId: string;
     city: string;
     state: string;
     county: string;
-    zipcode: string;
+    locationZipCode: string;
   };
 }

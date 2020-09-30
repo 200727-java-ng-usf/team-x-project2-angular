@@ -1,17 +1,25 @@
 import { Injectable } from '@angular/core';
 import { environment as env } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { ZipToLL } from '../models/zip-to-l-l';
+import { ZipToLatLonService } from '../services/zip-to-lat-lon.service';
+import * as SunCalc from 'node_modules/suncalc/suncalc.js';
 @Injectable({
   providedIn: 'root'
 })
 export class SunriseSunsetService {
+  suncalc = SunCalc;
+  constructor(private http: HttpClient,  private zipster: ZipToLatLonService) { }
 
-  constructor(private http: HttpClient) { }
-
-  async getSunriseSunset(latitude: number, longitude: number){
-    return await this.http.get(env.SUNRISE_SUNSET_API_URL + 'lat=' + latitude + '&lng=' + longitude).toPromise();
+  async getLatLonFromZip(zip: number){
+    let zipper: ZipToLL = <ZipToLL> await (await this.zipster.getLatLongFromZip(zip));
+    return zipper;
   }
-  async getSunriseSunsetByDate(latitude: number, longitude: number, date: string){
-    return await this.http.get(env.SUNRISE_SUNSET_API_URL + 'lat=' + latitude + '&lng=' + longitude + '&date=' + date).toPromise();
+  async getSunTimesForDay(zip: number, date: Date){
+    let latLong = this.getLatLonFromZip(zip);
+    return this.suncalc.getTimes(/*Date*/ date,
+      /*Number*/ (await latLong).records[0].fields.latitude,
+     /*Number*/ (await latLong).records[0].fields.longitude,
+     /*Number (default=0)*/ );
   }
 }

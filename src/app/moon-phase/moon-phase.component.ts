@@ -31,7 +31,7 @@ export class MoonPhaseComponent implements OnInit {
 
   ngOnInit(): void {
     // Ten Days
-    for (let i = 0; i < 10; i++){
+    for (let i = 0; i < 30; i++){
       let currentDay = new Date();
       currentDay.setTime( this.today.getTime() + (24 * i) * 60 * 60 * 1000);
       // Get Moon Phase from .js library
