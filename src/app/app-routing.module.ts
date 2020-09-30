@@ -7,7 +7,7 @@ import { SevenDayForecastComponent } from './seven-day-forecast/seven-day-foreca
 import { PastWeatherComponent } from './past-weather/past-weather.component';
 import { SunriseSunsetComponent } from './sunrise-sunset/sunrise-sunset.component';
 import { MoonPhaseComponent } from './moon-phase/moon-phase.component';
-
+import { HourlyForecastComponent } from './hourly-forecast/hourly-forecast.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent},
@@ -15,7 +15,8 @@ const routes: Routes = [
   { path: 'forecast', component: SevenDayForecastComponent},
   { path: 'past-weather', component: PastWeatherComponent},
   { path: 'rise-set', component: SunriseSunsetComponent},
-  { path: 'moon-phase', component: MoonPhaseComponent}
+  { path: 'moon-phase', component: MoonPhaseComponent},
+  { path: 'hourly-forecast', component: HourlyForecastComponent}
 ];
 
 @NgModule({

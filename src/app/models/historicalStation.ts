@@ -15,5 +15,5 @@ export class StationReturn{
   meta: {
     exec_time: number;
     generated: string;
-  }
+  };
 }

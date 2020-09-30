@@ -30,10 +30,18 @@ export class NavComponent{
       linkName: 'Home',
       fragment: '/home'
     },
-    
+
     {
-      linkName: 'Forecast',
+      linkName: 'Dialy Forecast',
       fragment: '/forecast'
+    },
+    {
+      linkName: 'Hourly Forecast',
+      fragment: '/hourly-forecast'
+    },
+    {
+      linkName: 'Profile',
+      fragment: '/profile'
     },
     {
       linkName: 'Past Weather',
@@ -72,10 +80,10 @@ export class NavComponent{
   constructor(private accountService: AccountService) {
 
     this.currentUserSubject = accountService.getCurrentUserSubject();
-    
+
   }
 
-  
+
 
   logout() {
     this.accountService.logout();

@@ -1,8 +1,8 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { SevenDayForecastService } from '../services/seven-day-forecast.service';
+import { ForecastService } from '../services/forecast.service';
 import { ChartOptions, ChartDataSets, Chart } from 'chart.js';
 import { Color, Label, SingleDataSet } from 'ng2-charts';
-
+import { Forecast } from '../models/daily-forecast';
 
 @Component({
   selector: 'app-seven-day-forecast',
@@ -10,38 +10,35 @@ import { Color, Label, SingleDataSet } from 'ng2-charts';
   styleUrls: ['./seven-day-forecast.component.css']
 })
 export class SevenDayForecastComponent implements OnInit {
-  currentForecast: any = <any>{};
+  currentForecast: Forecast;
   currentUVForecast: any = <any>{};
-  tempChart: Chart;
-  humidityChart: Chart;
-  uvChart: Chart;
+  gotForecast = false;
   favoriteLocations = [];
 
-  constructor(private forecastService: SevenDayForecastService, private elementRef: ElementRef) { }
+  constructor(private forecastService: ForecastService, private elementRef: ElementRef) { }
 
   async ngOnInit() {
     // Get the forecast from the forecast service using hard coded zip
-    this.currentForecast = <Object[]> await this.forecastService.getForecast('29150');
+    this.currentForecast = <Forecast> await this.forecastService.getDailyForecast('29150');
+    this.gotForecast = true;
     this.currentUVForecast = <Object[]> await this.forecastService.getUVForecast('29150');
     this.fillTempChart(this.currentForecast);
     this.fillHumidityChart(this.currentForecast);
-    this.fillUVChart(this.currentUVForecast);
+    this.fillUVChart(this.currentForecast);
   }
   // ------------------- Temp Chart ----------------------//
-  fillTempChart(currentForecast: any = {} as any){
+  fillTempChart(currentForecast: Forecast){
     let forcastTemps2 = [];
     let forecastMaxTemps2 = [];
     let forecastMinTemps2 = [];
-    let tempChartLabels2: Label[] = [];
+    let tempChartLabels2 = [];
     for (let i = 0; i < 40; i++){
       forcastTemps2[i] = currentForecast.list[i].main.temp;
       forecastMinTemps2[i] = currentForecast.list[i].main.temp_min;
       forecastMaxTemps2[i] = currentForecast.list[i].main.temp_max;
-      let str = this.currentForecast.list[i].dt_txt;
-      let subStr = str.substring(5, str.length - 3);
-      tempChartLabels2[i] = subStr;
+      tempChartLabels2[i] = currentForecast.list[i].dt_txt;
     }
-    this.tempChart = new Chart('tempChart', {
+    let tempChart = new Chart('tempChart', {
       type: 'line',
       data: {
           labels: tempChartLabels2,
@@ -80,31 +77,37 @@ export class SevenDayForecastComponent implements OnInit {
         title: {
           display: true,
           text: '40 Hour Temperature Forecast'
+        },
+        scales: {
+          xAxes: [{
+              type: 'time',
+              time: {
+                  unit: 'hour',
+              }
+          }]
         }
       }
     });
   }
   // ------------------- Humidity Chart ----------------------//
-  fillHumidityChart(currentForecast: any = {} as any){
+  fillHumidityChart(currentForecast: Forecast){
     let humidityData = [];
-    let humidityLabels: Label[] = [];
+    let humidityLabels = [];
     for (let i = 0; i < 40; i++){
       humidityData[i] = currentForecast.list[i].main.humidity;
-      let str = this.currentForecast.list[i].dt_txt;
-      let subStr = str.substring(5, str.length - 3);
-      humidityLabels[i] = subStr;
+      humidityLabels[i] = currentForecast.list[i].dt_txt;
     }
-    this.humidityChart = new Chart('humidityChart', {
+    let humidityChart = new Chart('humidityChart', {
       type: 'line',
       data: {
-          labels: humidityLabels,
-          datasets: [{
-            label: 'Humidity',
-            data: humidityData,
-            backgroundColor: 'rgba(21, 255, 255, 0.5)',
-            borderColor: 'black',
-            borderWidth: 2
-          }]
+        labels: humidityLabels,
+        datasets: [{
+          label: '\xB0 F',
+          data: humidityData,
+          backgroundColor: 'rgba(21, 255, 255, 0.03)',
+          borderColor: 'black',
+          borderWidth: 1
+        }]
       },
       options: {
         responsive: true,
@@ -119,28 +122,36 @@ export class SevenDayForecastComponent implements OnInit {
         title: {
           display: true,
           text: '40 Hour Humidity Forecast'
+        },
+        scales: {
+          xAxes: [{
+              type: 'time',
+              time: {
+                  unit: 'hour',
+              }
+          }]
         }
       }
     });
   }
   // ------------------- UV Chart ----------------------//
-  fillUVChart(currentUVForecast: any = {} as any){
+  fillUVChart(currentUVForecast: Forecast){
     let uvData = [];
-    let uvLabels: Label[] = [];
-    for (let i = 0; i < 8; i++){
-      uvData[i] = currentUVForecast[i]?.value;
-      uvLabels[i] = '' + i;
+    let uvLabels = [];
+    for (let i = 0; i < 40; i++){
+      uvData[i] = currentUVForecast.list[i].main.feels_like;
+      uvLabels[i] = currentUVForecast.list[i].dt_txt;
     }
-    this.uvChart = new Chart('uvChart', {
+    let uvChart = new Chart('uvChart', {
       type: 'line',
       data: {
           labels: uvLabels,
           datasets: [{
-            label: 'UV Index',
+            label: '\xB0 F',
             data: uvData,
-            backgroundColor: 'rgba(255, 99, 71, 0.8)',
+            backgroundColor: 'rgba(255, 99, 71, 0.03)',
             borderColor: 'black',
-            borderWidth: 2
+            borderWidth: 1
           }]
       },
       options: {
@@ -155,7 +166,15 @@ export class SevenDayForecastComponent implements OnInit {
         },
         title: {
           display: true,
-          text: '8 Hr UV Forecast'
+          text: 'Feels Like'
+        },
+        scales: {
+          xAxes: [{
+              type: 'time',
+              time: {
+                  unit: 'hour',
+              }
+          }]
         }
       }
     });

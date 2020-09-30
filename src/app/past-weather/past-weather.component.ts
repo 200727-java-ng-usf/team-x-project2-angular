@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PastWeatherService } from '../services/past-weather.service';
 import { FormBuilder, FormGroup, Validators, Form, FormControl } from '@angular/forms';
-import { StationReturn } from '../models/station';
+import { StationReturn } from '../models/historicalStation';
 import { HourlyHistDataPoint } from '../models/hourly-past';
 import { DailyHistDataPoint } from '../models/daily-past';
 import { Chart } from 'chart.js';
