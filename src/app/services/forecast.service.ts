@@ -1,29 +1,35 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment as env } from '../../environments/environment';
-
-
+import { ZipToLatLonService } from '../services/zip-to-lat-lon.service';
+import { ZipToLL } from '../models/zip-to-l-l';
+import { StationReturn } from '../models/forecastStation';
 @Injectable({
   providedIn: 'root'
 })
 export class ForecastService {
 
-  constructor(private http: HttpClient) { }
 
-  async getDailyForecast(zip: string) {
-    let currentWeatherCall = env.OPEN_WEATHER_API_URL + '/forecast?' + 'zip=' + zip + ',us' + '&appid=' + env.OPEN_WEATHER_API_KEY + '&units=imperial';
+  constructor(private http: HttpClient, private zipster: ZipToLatLonService) { }
+
+  async getLatLonFromZip(zip: number){
+    let zipper: ZipToLL = <ZipToLL> await (await this.zipster.getLatLongFromZip(zip));
+    return zipper;
+  }
+
+  async getDailyForecast(zip: number) {
+    // Get station
+    let station = <StationReturn> await this.getGovStation(zip);
+    // get weather from station
+    let currentWeatherCall = env.WEATHER_GOV_API_URL + '/gridpoints/' + station.properties.cwa + '/' + (await station).properties.gridX + ',' + (await station).properties.gridY + '/forecast';
     return await this.http.get(currentWeatherCall, {
 
     }).toPromise();
   }
-  async getUVForecast(zip: string) {
-    let currentWeatherCall = env.OPEN_WEATHER_API_URL + '/uvi/forecast?' + 'lat=' + 83 + '&lon=' + 30 + '&appid=' + env.OPEN_WEATHER_API_KEY;
-    return await this.http.get(currentWeatherCall, {
 
-    }).toPromise();
-  }
-  async getGovStation(lat: number, lon: number){
-    let gridPointCall = env.WEATHER_GOV_API_URL + '/points/' + lat + ',' + lon;
+  async getGovStation(zip: number){
+    let latLong = this.getLatLonFromZip(zip);
+    let gridPointCall = env.WEATHER_GOV_API_URL + '/points/' + (await latLong).records[0].fields.latitude + ',' + (await latLong).records[0].fields.longitude;
     return await this.http.get(gridPointCall, {
       // headers: {
       //   'User-Agent':  email
@@ -31,8 +37,11 @@ export class ForecastService {
     }).toPromise();
   }
 
-  async getGovHourlyForecast(gridPointX: number, gridPointY: number, station: string){
-    let hourlyForecastWeatherCall = env.WEATHER_GOV_API_URL + '/gridpoints/' + station + '/' + gridPointX + ',' + gridPointY + '/forecast/hourly';
+  async getGovHourlyForecast(zip: number){
+    // Get station
+    let station = <StationReturn> await this.getGovStation(zip);
+    // get weather from station
+    let hourlyForecastWeatherCall = env.WEATHER_GOV_API_URL + '/gridpoints/' + station.properties.cwa + '/' + (await station).properties.gridX + ',' + (await station).properties.gridY + '/forecast/hourly';
     return await this.http.get(hourlyForecastWeatherCall, {
       // headers: {
       //   'User-Agent':  email

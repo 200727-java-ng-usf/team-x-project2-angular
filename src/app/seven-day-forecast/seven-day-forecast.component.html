@@ -7,14 +7,6 @@
   <canvas id="tempChart"></canvas>
 </div>
 <br/>
-<div class="chartjs-container">
-  <canvas id="humidityChart"></canvas>
-</div>
-<br/>
-<div class="chartjs-container">
-  <canvas id="uvChart"></canvas>
-</div>
-
 <br/>
 <div *ngIf="gotForecast">
   <table class="table table-hover">
@@ -26,28 +18,16 @@
         <th>Weather: </th>
         <th>Temp: </th>
         <th>Max Temp: </th>
-        <th>Min Temp: </th>
-        <th><i class="wi wi-humidity"></i>Rh: </th>
-        <th><i class="wi wi-barometer"></i>Pressure: </th>
-        <th>Visibility: </th>
-        <th>Wind Deg: </th>
-        <th>Wind Speed: </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let hour of currentForecast.list; let i = index">
-        <td>{{hour.weather[0].main}}</td>
-        <td>{{hour.dt}}</td>
-        <td>{{ hour.main.feels_like }}</td>
-        <td>{{hour.weather[0].description}}</td>
-        <td>{{hour.main.temp}}</td>
-        <td>{{ hour.main.temp_max }}</td>
-        <td>{{ hour.main.temp_min}}</td>
-        <td>{{hour.main.humidity}}</td>
-        <td>{{hour.main.pressure}}</td>
-        <td>{{hour.visibility}}</td>
-        <td>{{hour.wind.deg}}</td>
-        <td>{{hour.wind.speed}}</td>
+      <tr *ngFor="let hour of currentForecast.properties.periods; let i = index">
+        <td>{{hour.name}}</td>
+        <td>{{hour.temperature}}</td>
+        <td>{{ hour.windSpeed }}</td>
+        <td>{{hour.windDirection}}</td>
+        <td>{{hour.shortForecast}}</td>
+        <td>{{ hour.detailedForecast }}</td>
       </tr>
     </tbody>
   </table>
