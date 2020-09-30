@@ -3,7 +3,7 @@ export class StationReturn{
     cwa: string;
     forecastOffice: string; // "https://api.weather.gov/offices/CAE",
     gridId: string; // 'CAE' station
-    grid: number; // 91
+    gridX: number; // 91
     gridY: number; // 58
     forecast: string; // "https://api.weather.gov/gridpoints/CAE/91,58/forecast",
     forecastHourly: string; // "https://api.weather.gov/gridpoints/CAE/91,58/forecast/hourly",

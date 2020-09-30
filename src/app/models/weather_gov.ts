@@ -21,21 +21,24 @@ export class WeatherGov {
       value: number,
       unitCode: string
     ]
+    periods: [{
+      number: number;
+      name: string;
+      startTime: Date;
+      endTime: Date;
+      isDaytime: boolean;
+      temperature: number;
+      temperatureUnit: string;
+      temperatureTrend: string;
+      maxTemperature: number;
+      minTemperature: number;
+      windSpeed: string;
+      windDirection: string;
+      icon: string;
+      shortForecast: string;
+      detailedForecast: string;
+    }];
   };
-  periods: [{
-    number: number,
-    name: string,
-    startTime: Date,
-    endTime: Date,
-    isDaytime: boolean,
-    temperature: number,
-    temperatureUnit: string,
-    temperatureTrend: string,
-    windSpeed: string,
-    windDirection: string,
-    icon: string,
-    shortForecast: string,
-    detailedForecast: string
-  }];
+
 
 }

@@ -27,8 +27,12 @@ export class NavComponent{
       fragment: '/register'
     },
     {
-      linkName: 'Forecast',
+      linkName: 'Dialy Forecast',
       fragment: '/forecast'
+    },
+    {
+      linkName: 'Hourly Forecast',
+      fragment: '/hourly-forecast'
     },
     {
       linkName: 'Profile',
