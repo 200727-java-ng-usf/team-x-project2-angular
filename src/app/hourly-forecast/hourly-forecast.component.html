@@ -1,5 +1,32 @@
 <br/>
 <br/>
-<div class="chartjs-container">
-  <canvas id="tempChart"></canvas>
+<div class="container" >
+  <div class="chartjs-container">
+    <h2>Hourly Forecast:</h2>
+    <canvas id="tempChart"></canvas>
+  </div>
+  <div *ngIf="gotForecast">
+    <table class="table table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th>#</th>
+          <th>Time: </th>
+          <th>Forecast: </th>
+          <th>Wind Direction: </th>
+          <th>Wind Speed: </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let hour of forecast.properties.periods; let i = index">
+          <td><img src="{{ hour.icon }}" alt=""></td>
+          <td>{{ hour.endTime | date:'short' }}</td>
+          <td>{{hour.shortForecast}}</td>
+          <td>Wind Direction: {{hour.windDirection}}</td>
+          <td>{{hour.windSpeed}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+

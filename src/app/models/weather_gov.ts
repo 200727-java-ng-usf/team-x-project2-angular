@@ -22,6 +22,7 @@ export class WeatherGov {
       unitCode: string
     ]
     periods: [{
+      apparentTemperature: number;
       number: number;
       name: string;
       startTime: Date;
@@ -32,6 +33,10 @@ export class WeatherGov {
       temperatureTrend: string;
       maxTemperature: number;
       minTemperature: number;
+      relativeHumidity: number;
+      skyCover: number;
+      heatIndex: number;
+      windChill: number;
       windSpeed: string;
       windDirection: string;
       icon: string;

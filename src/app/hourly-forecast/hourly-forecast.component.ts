@@ -13,7 +13,7 @@ export class HourlyForecastComponent implements OnInit {
   forecast: WeatherGov;
   station: StationReturn;
   constructor(private forecastService: ForecastService, private elementRef: ElementRef) { }
-
+  gotForecast = false;
   async ngOnInit() {
     this.getStation( 33.9, -80.3);
   }
@@ -27,8 +27,9 @@ export class HourlyForecastComponent implements OnInit {
     for(let i = 0; i < this.forecast.properties.periods.length; i++){
       tempArr[i] = this.forecast.properties.periods[i].temperature;
       let somedate = new Date(this.forecast.properties.periods[i].endTime);
-      labelArr[i] = somedate.toTimeString();
+      labelArr[i] = somedate;
     }
+    this.gotForecast = true;
     this.generateTemperatureChart(labelArr, tempArr);
   }
 
@@ -38,7 +39,7 @@ export class HourlyForecastComponent implements OnInit {
     this.getForecast(this.station.properties.gridX, this.station.properties.gridY, this.station.properties.gridId);
   }
 
-  generateTemperatureChart(labelArray: string[], dataArray: number[]){
+  generateTemperatureChart(labelArray: Date[], dataArray: number[]){
     let newChart = new Chart('tempChart', {
       type: 'line',
         options: {
@@ -54,6 +55,14 @@ export class HourlyForecastComponent implements OnInit {
           title: {
             display: true,
             text: 'Hourly Temperature'
+          },
+          scales: {
+            xAxes: [{
+                type: 'time',
+                time: {
+                    unit: 'hour',
+                }
+            }]
           }
         },
         data: {
