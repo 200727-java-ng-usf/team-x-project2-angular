@@ -9,7 +9,7 @@ export class ZipToLatLonService {
   constructor(private http: HttpClient) { }
 
   async getLatLongFromZip(zip: number){
-    let currentWeatherCall = env.OPEN_WEATHER_API_URL + '/forecast?' + 'zip=' + zip + ',us' + '&appid=' + env.OPEN_WEATHER_API_KEY + '&units=imperial';
+    let currentWeatherCall = env.ZIP_TO_LAT_LONG_URL + zip + '&facet=state&facet=timezone&facet=dst';
     return await this.http.get(currentWeatherCall, {
 
     }).toPromise();
