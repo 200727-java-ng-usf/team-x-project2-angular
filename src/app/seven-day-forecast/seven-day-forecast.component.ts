@@ -12,9 +12,7 @@ import { Color, Label, SingleDataSet } from 'ng2-charts';
 export class SevenDayForecastComponent implements OnInit {
   currentForecast: any = <any>{};
   currentUVForecast: any = <any>{};
-  tempChart: Chart;
-  humidityChart: Chart;
-  uvChart: Chart;
+
   favoriteLocations = [];
 
   constructor(private forecastService: ForecastService, private elementRef: ElementRef) { }
@@ -41,7 +39,7 @@ export class SevenDayForecastComponent implements OnInit {
       let subStr = str.substring(5, str.length - 3);
       tempChartLabels2[i] = subStr;
     }
-    this.tempChart = new Chart('tempChart', {
+    let tempChart = new Chart('tempChart', {
       type: 'line',
       data: {
           labels: tempChartLabels2,
@@ -94,7 +92,7 @@ export class SevenDayForecastComponent implements OnInit {
       let subStr = str.substring(5, str.length - 3);
       humidityLabels[i] = subStr;
     }
-    this.humidityChart = new Chart('humidityChart', {
+    let humidityChart = new Chart('humidityChart', {
       type: 'line',
       data: {
           labels: humidityLabels,
@@ -131,7 +129,7 @@ export class SevenDayForecastComponent implements OnInit {
       uvData[i] = currentUVForecast[i]?.value;
       uvLabels[i] = '' + i;
     }
-    this.uvChart = new Chart('uvChart', {
+    let uvChart = new Chart('uvChart', {
       type: 'line',
       data: {
           labels: uvLabels,
