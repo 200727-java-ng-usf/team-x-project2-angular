@@ -44,9 +44,9 @@
 
         <div class="form-group">
             <label for="zipcode">Zip Code</label>
-            <input id="zipcode" type="text" class="form-control" formControlName="zipcode"/>
+            <input id="zipcode" type="text" class="form-control" formControlName="zipcode" pattern="[0-9]{5}"/>
             <div *ngIf="submitted && formFields.zipcode.errors">
-                <p class="alert alert-danger">Zip Code is required!</p>
+                <p class="alert alert-danger">Zip Code must be a 5 digit number</p>
             </div>
         </div>
 

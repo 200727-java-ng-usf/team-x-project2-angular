@@ -40,10 +40,6 @@ export class NavComponent{
       fragment: '/hourly-forecast'
     },
     {
-      linkName: 'Profile',
-      fragment: '/profile'
-    },
-    {
       linkName: 'Past Weather',
       fragment: '/past-weather'
     },
@@ -58,12 +54,12 @@ export class NavComponent{
   ];
   navLinksForNonAuthenticated = [
     {
-      linkName: 'Login',
-      fragment: '/login'
-    },
-    {
       linkName: 'Register',
       fragment: '/register'
+    },
+    {
+      linkName: 'Login',
+      fragment: '/login'
     }
   ]
   navLinksForAuthenticated = [
