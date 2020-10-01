@@ -28,6 +28,9 @@ export class AccountService {
     console.log(`sending app user ${appUser}, to ${env.USER_API_URL}/users as POST`);
 
     return this.http.post(`${env.USER_API_URL}/users`, appUser, {
+
+      withCredentials: true,
+
       headers: {
         'Content-type': 'application/json'
       },
@@ -38,6 +41,7 @@ export class AccountService {
         console.log("RESP: " + resp);
         let principal = resp.body as Principal;
         this.currentUserSubject.next(principal);
+        localStorage.setItem('principal', JSON.stringify(principal));
       })
 
     );
@@ -60,6 +64,42 @@ export class AccountService {
     console.log(`sending credentials, ${credentials}, to ${env.USER_API_URL}/auth as POST`);
 
     return this.http.post(`${env.USER_API_URL}/auth`, credentials, {
+
+      withCredentials: true,
+
+      headers: {
+        'Content-type': 'application/json'
+      },
+      observe: 'response'
+    }).pipe(
+      map(resp => {
+        let principal = resp.body as Principal;
+        this.currentUserSubject.next(principal);
+        localStorage.setItem('principal', JSON.stringify(principal));
+        console.log("Current User: ");
+        console.log(this.currentUserSubject.value);
+      })
+    );
+  }
+
+  // find out the actual endpoint and http method 
+  updatePassword(newPassword: string) {
+    console.log('in AccountService.updatePassword()');
+
+    let userBody = {
+      userId: this.currentUserSubject.value.userId,
+      password: newPassword,
+      username: this.currentUserSubject.value.username,
+      userRole: this.currentUserSubject.value.userRole,
+      home: this.currentUserSubject.value.home
+    };
+    console.log(newPassword + " " + " " + " " + " " + " " + " " + newPassword)
+    console.log(`sending userBody, ${userBody}, to ${env.USER_API_URL}/users as PUT`);
+
+    return this.http.put(`${env.USER_API_URL}/users/password?password=${newPassword}`, userBody, {
+      
+      withCredentials: true,
+      
       headers: {
         'Content-type': 'application/json'
       },
@@ -70,11 +110,20 @@ export class AccountService {
         this.currentUserSubject.next(principal);
         console.log("Current User: ");
         console.log(this.currentUserSubject.value);
+        localStorage.setItem('principal', JSON.stringify(principal));
       })
     );
+
   }
 
   logout(): void {
+    let userBody = {
+      userId: this.currentUserSubject.value.userId,
+      //password: newPassword,
+      username: this.currentUserSubject.value.username,
+      userRole: this.currentUserSubject.value.userRole,
+      home: this.currentUserSubject.value.home
+    };
     this.http.get(`${env.USER_API_URL}/auth`);
     this.currentUserSubject.next(null);
   }
