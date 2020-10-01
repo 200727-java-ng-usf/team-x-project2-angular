@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeForecastService } from '../services/home-forecast.service';
 import { AccountService } from '../services/account.service';
+import { LocationsService } from '../services/locations.service';
 import { Principal } from '../models/principal';
 import { Location } from '../models/location';
 import { BehaviorSubject } from 'rxjs';
@@ -22,19 +23,26 @@ export class HomeComponent implements OnInit {
   clear = false;
   clouds = false;
   atmosphere = false;
-  locations: Location[] = [{city: 'sumter',country: 'us',location_id: 1, location_zip_code: '29150', state: 'SC'}];
+  locations = [];
   updating = false;
   updateForm = new FormGroup({
     location: new FormControl('', Validators.required)
   });
   currentUserSubject: BehaviorSubject<Principal>;
 
-  constructor(private hFService: HomeForecastService, private accountService: AccountService, private formBuilder: FormBuilder) {
+  constructor(private hFService: HomeForecastService, private accountService: AccountService, private formBuilder: FormBuilder, private locationService: LocationsService) {
     this.currentUserSubject = accountService.getCurrentUserSubject();
+    let locations = <BehaviorSubject<Location[]>> locationService.getCurrentLocationsSubject();
+    for (let i = 0; i < locations.getValue.length; i++){
+      this.locations[i] = locations.getValue[0];
+    }
+
+    console.log(this.currentUserSubject);
     console.log(this.currentUserSubject);
    }
 
   async ngOnInit() {
+
     // harcoded zipcode for now, will get from current user
     this.currentWeather = <Object[]> await this.hFService.getForecast(this.currentUserSubject.value.home.locationZipCode);
     this.currentWeatherDescription = this.currentWeather.weather[0].description;
@@ -62,7 +70,13 @@ export class HomeComponent implements OnInit {
       this.clouds = true;
     }
     console.log(this.currentWeather);
+
   }
+
+  async getFavLocations(){
+
+  }
+
   get updateFields() {
     return this.updateForm.controls;
   }

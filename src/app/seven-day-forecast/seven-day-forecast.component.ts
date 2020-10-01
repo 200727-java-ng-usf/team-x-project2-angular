@@ -21,7 +21,7 @@ export class SevenDayForecastComponent implements OnInit {
   favoriteLocations = [];
   station: StationReturn;
   currentLocation;
-  locations: Location[] = [{city: 'sumter',country: 'us',location_id: 1, location_zip_code: '29150', state: 'SC'}];
+  locations: Location[] = [{city: 'sumter',country: 'us',locationId: 1, locationZipCode: '29150', state: 'SC'}];
   updating = false;
   updateForm = new FormGroup({
     location: new FormControl('', Validators.required)

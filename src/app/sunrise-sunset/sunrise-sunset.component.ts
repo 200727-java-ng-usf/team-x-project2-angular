@@ -14,7 +14,7 @@ import { ZipToLL } from '../models/zip-to-l-l';
   styleUrls: ['./sunrise-sunset.component.css']
 })
 export class SunriseSunsetComponent implements OnInit {
-  locations: Location[] = [{city: 'sumter',country: 'us',location_id: 1, location_zip_code: '29150', state: 'SC'}];
+  locations: Location[] = [{city: 'sumter',country: 'us',locationId: 1, locationZipCode: '29150', state: 'SC'}];
   currentLocation = '';
   updating = false;
   updateForm = new FormGroup({

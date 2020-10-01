@@ -17,7 +17,7 @@ import { Forecast } from '../models/daily-forecast';
   styleUrls: ['./hourly-forecast.component.css']
 })
 export class HourlyForecastComponent implements OnInit {
-  locations: Location[] = [{city: 'sumter',country: 'us',location_id: 1, location_zip_code: '29150', state: 'SC'}];
+  locations: Location[] = [{city: 'sumter',country: 'us',locationId: 1, locationZipCode: '29150', state: 'SC'}];
   currentLocation = '';
   updating = false;
   updateForm = new FormGroup({

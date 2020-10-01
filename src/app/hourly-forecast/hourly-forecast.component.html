@@ -6,10 +6,10 @@
     <div class="form-group">
       <label for="location"> Choose a Station:</label>
       <select class="form-control" id="location" formControlName="location" required >
-        <option *ngFor="let location of locations; let i = index" value="{{ location.location_zip_code  }}" selected>
+        <option *ngFor="let location of locations; let i = index" value="{{ location.locationZipCode  }}" selected>
           Name: {{ location.city }},
           State: {{ location.state }},
-          Zip: {{ location.location_zip_code }}, {{location.country}}
+          Zip: {{ location.locationZipCode }}, {{location.country}}
         </option>
       </select>
       <button type="submit" class="btn btn-primary" [disabled]="!updateForm.touched || updateForm.invalid">Update</button>

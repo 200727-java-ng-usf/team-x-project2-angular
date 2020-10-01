@@ -1,7 +1,7 @@
 export class Location{
-  location_id: number;
+  locationId: number;
   city: string;
   state: string;
   country: string;
-  location_zip_code: string;
+  locationZipCode: string;
 }
