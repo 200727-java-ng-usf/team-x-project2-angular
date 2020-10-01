@@ -32,7 +32,7 @@ export class NavComponent{
     },
 
     {
-      linkName: 'Dialy Forecast',
+      linkName: 'Daily Forecast',
       fragment: '/forecast'
     },
     {
