@@ -7,12 +7,16 @@ import { DailyHistDataPoint } from '../models/daily-past';
 import { Chart } from 'chart.js';
 import {Label } from 'ng2-charts';
 import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+import { AccountService } from '../services/account.service';
+import { Principal } from '../models/principal';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-past-weather',
   templateUrl: './past-weather.component.html',
   styleUrls: ['./past-weather.component.css']
 })
-export class PastWeatherComponent{
+export class PastWeatherComponent implements OnInit{
+  currentUserSubject: BehaviorSubject<Principal>;
   cityList: any = {} as any;
   // Forms
   searchForm = new FormGroup({
@@ -45,11 +49,30 @@ export class PastWeatherComponent{
   humidityChart: Chart;
   rainChart: Chart;
 
-  constructor(private pastWeatherService: PastWeatherService, private formBuilder: FormBuilder, private calendar: NgbCalendar) {
+  constructor(private pastWeatherService: PastWeatherService, private formBuilder: FormBuilder, private calendar: NgbCalendar, private accountService: AccountService) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);
+    this.currentUserSubject = accountService.getCurrentUserSubject();
+    console.log(this.currentUserSubject);
    }
 
+   async ngOnInit(){
+    this.badStation = false;
+    this.foundStation = false;
+    this.stations = [];
+    this.searching = true;
+    this.loading = true;
+
+    let stationObj = <StationReturn>await (await this.pastWeatherService.searchForStation(this.currentUserSubject.value.home.city));
+    console.log(stationObj.data[0]);
+    for( let i = 0; i < stationObj.data.length ; i++){
+      this.stations[i] = stationObj.data[i];
+    }
+    console.log(this.stations);
+    this.searching = false;
+    this.loading = false;
+    this.foundStation = true;
+   }
   get searchTerm(): any{
     return this.searchForm.get('searchTerm');
   }
@@ -87,7 +110,6 @@ export class PastWeatherComponent{
       return;
     };
     console.log(stationObj.data[0]);
-    let stationIndex = stationObj[0];
     for( let i = 0; i < stationObj.data.length ; i++){
       this.stations[i] = stationObj.data[i];
     }

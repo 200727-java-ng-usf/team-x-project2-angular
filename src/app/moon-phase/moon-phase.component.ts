@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as SunCalc from 'node_modules/suncalc/suncalc.js';
-
+import { AccountService } from '../services/account.service';
+import { Principal } from '../models/principal';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-moon-phase',
   templateUrl: './moon-phase.component.html',
@@ -26,12 +28,17 @@ export class MoonPhaseComponent implements OnInit {
     }
   }];
   suncalc = SunCalc;
-  constructor() { }
+  currentUserSubject: BehaviorSubject<Principal>;
+
+  constructor( private accountService: AccountService) {
+    this.currentUserSubject = accountService.getCurrentUserSubject();
+    console.log(this.currentUserSubject);
+   }
   today = new Date();
 
   ngOnInit(): void {
     // Ten Days
-    for (let i = 0; i < 10; i++){
+    for (let i = 0; i < 30; i++){
       let currentDay = new Date();
       currentDay.setTime( this.today.getTime() + (24 * i) * 60 * 60 * 1000);
       // Get Moon Phase from .js library

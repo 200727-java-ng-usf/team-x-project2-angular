@@ -8,7 +8,7 @@ export class ZipToLatLonService {
 
   constructor(private http: HttpClient) { }
 
-  async getLatLongFromZip(zip: number){
+  async getLatLongFromZip(zip: string){
     let currentWeatherCall = env.ZIP_TO_LAT_LONG_URL + zip + '&facet=state&facet=timezone&facet=dst';
     return await this.http.get(currentWeatherCall, {
 

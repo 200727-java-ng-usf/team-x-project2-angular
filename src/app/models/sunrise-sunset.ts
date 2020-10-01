@@ -1,17 +1,18 @@
 import { Time } from '@angular/common'
 
 export class SunriseSunset{
-  results: {
-    sunrise: Time;
-    sunset: Time;
-    solar_noon: Time;
-    day_length: Time;
-    civil_twilight_begin: Time;
-    civil_twilight_end: Time;
-    nautical_twilight_begin: Time;
-    nautical_twilight_end: Time;
-    astronomical_twilight_begin: Time;
-    astronomical_twilight_end: Time;
-  };
-  status: string;
+  dawn: Date;
+  dusk: Date;
+  goldenHour: Date;
+  goldenHourEnd: Date;
+  nadir: Date;
+  nauticalDawn: Date;
+  nauticalDusk: Date;
+  night: Date;
+  nightEnd: Date;
+  solarNoon: Date;
+  sunrise: Date;
+  sunriseEnd: Date;
+  sunset: Date;
+  sunsetStart: Date;
 }
