@@ -5,7 +5,9 @@ import { ChartOptions, ChartDataSets, Chart } from 'chart.js';
 import { Color, Label, SingleDataSet } from 'ng2-charts';
 import { Forecast } from '../models/daily-forecast';
 import { StationReturn } from '../models/forecastStation';
+import { AccountService } from '../services/account.service';
 import { Principal } from '../models/principal';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-seven-day-forecast',
@@ -13,17 +15,19 @@ import { Principal } from '../models/principal';
   styleUrls: ['./seven-day-forecast.component.css']
 })
 export class SevenDayForecastComponent implements OnInit {
+  currentUserSubject: BehaviorSubject<Principal>;
   currentForecast: Forecast;
   gotForecast = false;
   favoriteLocations = [];
   station: StationReturn;
-  constructor(private forecastService: ForecastService, private elementRef: ElementRef) { }
+  constructor(private forecastService: ForecastService, private elementRef: ElementRef, private accountService: AccountService) { }
 
   async ngOnInit() {
     // Get the forecast from the forecast service using hard coded zip
+    this.currentUserSubject = this.accountService.getCurrentUserSubject();
+    console.log(this.currentUserSubject);
 
-
-    this.getForecast('90210');
+    this.getForecast(this.currentUserSubject.value.home.locationZipCode);
 
   }
 
