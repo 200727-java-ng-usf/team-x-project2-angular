@@ -7,24 +7,40 @@ import { StationReturn } from '../models/forecastStation';
 import { AccountService } from '../services/account.service';
 import { Principal } from '../models/principal';
 import { BehaviorSubject } from 'rxjs';
+import { FormBuilder, FormGroup, Validators, Form, FormControl } from '@angular/forms';
+import { Location } from '../models/location';
+import { Forecast } from '../models/daily-forecast';
+
 @Component({
   selector: 'app-hourly-forecast',
   templateUrl: './hourly-forecast.component.html',
   styleUrls: ['./hourly-forecast.component.css']
 })
 export class HourlyForecastComponent implements OnInit {
+  locations: Location[] = [{city: 'sumter',country: 'us',locationId: 1, locationZipCode: '29150', state: 'SC'}];
+  currentLocation = '';
+  updating = false;
+  updateForm = new FormGroup({
+    location: new FormControl('', Validators.required)
+  });
   forecast: WeatherGov;
   station: StationReturn;
   currentUserSubject: BehaviorSubject<Principal>;
-  constructor(private forecastService: ForecastService, private elementRef: ElementRef, private accountService: AccountService) {
+  constructor(private forecastService: ForecastService, private elementRef: ElementRef, private accountService: AccountService, private formBuilder: FormBuilder) {
+    this.forecast = new Forecast();
     this.currentUserSubject = accountService.getCurrentUserSubject();
     console.log(this.currentUserSubject);
    }
   gotForecast = false;
   async ngOnInit() {
     this.getForecast(this.currentUserSubject.value.home.locationZipCode);
+    this.currentLocation = this.currentUserSubject.value.home.city;
   }
 
+  async updateLocation(){
+    this.currentLocation = this.updateFields.location.value;
+    this.getForecast(this.updateFields.location.value);
+  }
   async getForecast(zip: string){
     this.forecast = <WeatherGov> await (await this.forecastService.getGovHourlyForecast(zip));
     console.log(this.forecast.properties.periods);
@@ -38,7 +54,9 @@ export class HourlyForecastComponent implements OnInit {
     this.gotForecast = true;
     this.generateTemperatureChart(labelArr, tempArr);
   }
-
+  get updateFields() {
+    return this.updateForm.controls;
+  }
   generateTemperatureChart(labelArray: Date[], dataArray: number[]){
     let newChart = new Chart('tempChart', {
       type: 'line',
