@@ -30,11 +30,14 @@ export class SevenDayForecastComponent implements OnInit {
   constructor(private locationService: LocationsService, private forecastService: ForecastService, private elementRef: ElementRef, private accountService: AccountService, private formBuilder: FormBuilder) {
     this.currentUserSubject = this.accountService.getCurrentUserSubject();
     console.log(this.currentUserSubject);
+    this.locations = <Location[]> JSON.parse(localStorage.getItem('locations'));
+    // this.locationService.getCurrentLocationSubject().value;
    }
 
   async ngOnInit() {
     this.getForecast(this.currentUserSubject.value.home.locationZipCode);
     this.currentLocation = this.currentUserSubject.value.home.city;
+
   }
   get updateFields() {
     return this.updateForm.controls;
@@ -44,8 +47,8 @@ export class SevenDayForecastComponent implements OnInit {
     this.getForecast(this.updateFields.location.value);
   }
   async getForecast(zip: string){
-    ;
-    console.log(this.locationService.getFavoriteLocations().subscribe());
+    // this.locations = <Location[]> JSON.parse(localStorage.getItem('locations'));
+    // console.log();
     this.currentForecast = <Forecast> await (await this.forecastService.getDailyForecast(zip));
 
 
