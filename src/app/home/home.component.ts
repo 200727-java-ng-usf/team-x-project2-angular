@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit {
       this.clouds = true;
     }
     console.log(this.currentWeather);
-
+    console.log(this.locationService.getFavoriteLocations());
   }
 
   async getFavLocations(){

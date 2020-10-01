@@ -4,7 +4,7 @@
   <!-- Select from favorites -->
   <form [formGroup]="updateForm" (ngSubmit)="updateLocation()">
     <div class="form-group">
-      <label for="location"> Choose a Station:</label>
+      <label for="location">Choose from Your Favorite Locations:</label>
       <select class="form-control" id="location" formControlName="location" required >
         <option *ngFor="let location of locations; let i = index" value="{{ location.locationZipCode  }}" selected>
           Name: {{ location.city }},
