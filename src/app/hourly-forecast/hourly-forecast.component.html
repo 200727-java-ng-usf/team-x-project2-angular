@@ -2,7 +2,7 @@
 <br/>
 <div class="container" >
   <div class="chartjs-container">
-    <h2>Hourly Forecast:</h2>
+    <h2>Hourly Forecast For: {{ currentUserSubject.value.home.city }}</h2>
     <canvas id="tempChart"></canvas>
   </div>
   <div *ngIf="gotForecast">

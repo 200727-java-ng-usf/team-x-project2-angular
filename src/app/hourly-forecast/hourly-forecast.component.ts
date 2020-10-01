@@ -4,6 +4,9 @@ import { ChartOptions, ChartDataSets, Chart } from 'chart.js';
 import { Color, Label, SingleDataSet } from 'ng2-charts';
 import { WeatherGov } from '../models/weather_gov';
 import { StationReturn } from '../models/forecastStation';
+import { AccountService } from '../services/account.service';
+import { Principal } from '../models/principal';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-hourly-forecast',
   templateUrl: './hourly-forecast.component.html',
@@ -12,16 +15,19 @@ import { StationReturn } from '../models/forecastStation';
 export class HourlyForecastComponent implements OnInit {
   forecast: WeatherGov;
   station: StationReturn;
-  constructor(private forecastService: ForecastService, private elementRef: ElementRef) { }
+  currentUserSubject: BehaviorSubject<Principal>;
+  constructor(private forecastService: ForecastService, private elementRef: ElementRef, private accountService: AccountService) {
+    this.currentUserSubject = accountService.getCurrentUserSubject();
+    console.log(this.currentUserSubject);
+   }
   gotForecast = false;
   async ngOnInit() {
-    this.getStation( 33.9, -80.3);
+    this.getForecast(this.currentUserSubject.value.home.locationZipCode);
   }
 
-  async getForecast(gridPointX: number, gripPointY: number, station: string){
-    this.forecast = <WeatherGov> await (await this.forecastService.getGovHourlyForecast(gridPointX, gripPointY, station));
+  async getForecast(zip: string){
+    this.forecast = <WeatherGov> await (await this.forecastService.getGovHourlyForecast(zip));
     console.log(this.forecast.properties.periods);
-
     let tempArr = [];
     let labelArr = [];
     for(let i = 0; i < this.forecast.properties.periods.length; i++){
@@ -31,12 +37,6 @@ export class HourlyForecastComponent implements OnInit {
     }
     this.gotForecast = true;
     this.generateTemperatureChart(labelArr, tempArr);
-  }
-
-  async getStation(lat: number, lon: number){
-    this.station = <StationReturn> await (await this.forecastService.getGovStation( lat, lon));
-    console.log(this.station.properties);
-    this.getForecast(this.station.properties.gridX, this.station.properties.gridY, this.station.properties.gridId);
   }
 
   generateTemperatureChart(labelArray: Date[], dataArray: number[]){

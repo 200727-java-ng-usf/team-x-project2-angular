@@ -2,66 +2,42 @@ import { Component, OnInit } from '@angular/core';
 import { SunriseSunsetService } from '../services/sunrise-sunset.service';
 import { SunriseSunset } from '../models/sunrise-sunset';
 import { FormBuilder, FormGroup, Validators, Form, FormControl } from '@angular/forms';
-
-import { Chart, TimeScale } from 'chart.js';
-import {Label } from 'ng2-charts';
-
-
+import * as SunCalc from 'node_modules/suncalc/suncalc.js';
+import { AccountService } from '../services/account.service';
+import { Principal } from '../models/principal';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-sunrise-sunset',
   templateUrl: './sunrise-sunset.component.html',
   styleUrls: ['./sunrise-sunset.component.css']
 })
 export class SunriseSunsetComponent implements OnInit {
-
-  riseSet: SunriseSunset;
-  riseSetForecast: SunriseSunset[];
-  latitude: number;
-  logitude: number;
-  today = new Date();
-  altDate = new Date();
+  suncalc = SunCalc;
+  riseSetForecast: SunriseSunset[] = [];
   gotRiseSet = false;
-  riseSetChart: Chart;
-  updateForm: FormGroup;
-  badDateEntered = false;
-  constructor(private riseSetService: SunriseSunsetService, private formBuilder: FormBuilder) { }
+  currentUserSubject: BehaviorSubject<Principal>;
+  constructor(private riseSetService: SunriseSunsetService, private formBuilder: FormBuilder, private accountService: AccountService) {
+    this.currentUserSubject = this.accountService.getCurrentUserSubject();
+    console.log(this.currentUserSubject);
+   }
 
   ngOnInit() {
-    this.getRiseSetToday(33.9, -80.3);
-    let date = Date.now;
-    this.updateForm = this.formBuilder.group({
-      newDate: ['', Validators.required]
-    });
+
+    this.getRiseSet(this.currentUserSubject.value.home.locationZipCode);
+
   }
 
-  async getRiseSetToday(lat: number, lon: number){
+  async getRiseSet(zip: string){
     this.gotRiseSet = false;
-    this.riseSet = <SunriseSunset> await (this.riseSetService.getSunriseSunset(lat, lon));
-
-    this.gotRiseSet = true;
-  }
-
-  async getRiseSetForDate(lat: number, lon: number, date: string){
-    console.log(date);
-    this.gotRiseSet = false;
-    this.riseSet = new SunriseSunset;
-    this.riseSet = <SunriseSunset> await (this.riseSetService.getSunriseSunsetByDate(lat, lon, date));
-    this.gotRiseSet = true;
-  }
-
-  get updateFields(){
-    return this.updateForm.controls;
-  }
-
-  async updateDay(){
-    let date = <Date> this.updateFields.newDate.value;
-    if (date != null ||  !date){
-      this.getRiseSetForDate(33.9, -80.3, this.updateFields.newDate.value);
-      this.badDateEntered = false;
-    } else {
-      this.badDateEntered = true;
+    // this.riseSet = new SunriseSunset;
+    for (let i = 0; i < 30; i++){
+      let currentDay = new Date();
+      currentDay.setTime( currentDay.getTime() + (24 * i) * 60 * 60 * 1000);
+      this.riseSetForecast[i] = <SunriseSunset> await (this.riseSetService.getSunTimesForDay(zip, currentDay));
     }
-
+    this.gotRiseSet = true;
   }
+
+
 
 }

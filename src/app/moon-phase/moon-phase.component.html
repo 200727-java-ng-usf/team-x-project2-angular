@@ -1,36 +1,28 @@
-<br/>
-<br/>
-
-<h3>10 Day Moon Forecast: </h3>
-<div class="card-column" >
-  <div class="card container" *ngFor="let day of moonPhase; let i = index ">
-    <i class="{{ day.iconLink.link }} text-center"></i>
-    <div class="card-body">
-      <h4 class="card-title">
-        Moon Phase: {{ day.iconLink.friendlyName  }}
-      </h4>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          Date: {{ day.date }}
-        </li>
-        <li class="list-group-item">
-          Moon Cycle Fraction: {{ day.phase | number}}
-        </li>
-        <li class="list-group-item">
-          Moon Illumination: {{ day.fraction | percent}}
-        </li>
-        <li class="list-group-item">
-          Moon Angle: {{ day.angle | number}}
-        </li>
-        <li class="list-group-item">
-          Moon Rise Time: {{ day.times.rise | date:'shortTime'  }}
-        </li>
-        <li class="list-group-item">
-          Moon Set Time: {{ day.times.set | date:'shortTime' }}
-        </li>
-      </ul>
-    </div>
-  </div>
+<div class="container">
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th>Date</th>
+        <th>Moon Phase</th>
+        <th>Date</th>
+        <th>Moon Cycle Fraction</th>
+        <th>Moon Illumination</th>
+        <th>Moon Angle</th>
+        <th>Moon Rise Time</th>
+        <th>Moon Set Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let day of moonPhase; let i = index">
+        <i class="{{ day.iconLink.link }} text-center"></i>
+        <td>{{ day.iconLink.friendlyName  }}</td>
+        <td>{{ day.date }}</td>
+        <td>{{ day.phase | number}}</td>
+        <td>{{ day.fraction | percent}}</td>
+        <td>{{ day.angle | number}}</td>
+        <td>{{ day.times.rise | date:'shortTime'  }}</td>
+        <td> {{ day.times.set | date:'shortTime' }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-
-
