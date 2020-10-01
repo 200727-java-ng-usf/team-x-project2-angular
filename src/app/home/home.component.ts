@@ -22,15 +22,16 @@ export class HomeComponent implements OnInit {
   clouds = false;
   atmosphere = false;
 
-  currentUserSubject: BehaviorSubject<Principal>
+  currentUserSubject: BehaviorSubject<Principal>;
 
-  constructor(private hFService: HomeForecastService, private accountService: AccountService) { 
+  constructor(private hFService: HomeForecastService, private accountService: AccountService) {
     this.currentUserSubject = accountService.getCurrentUserSubject();
+    console.log(this.currentUserSubject);
    }
 
   async ngOnInit() {
     // harcoded zipcode for now, will get from current user
-    this.currentWeather = <Object[]> await this.hFService.getForecast('29150');
+    this.currentWeather = <Object[]> await this.hFService.getForecast(this.currentUserSubject.value.home.locationZipCode);
     this.currentWeatherDescription = this.currentWeather.weather[0].description;
     this.currentWeatherIconId = this.currentWeather.weather[0].id;
     // determine the current condition using: https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2
@@ -57,6 +58,9 @@ export class HomeComponent implements OnInit {
     }
     console.log(this.currentWeather);
   }
+  // async getCurrentWeather(zip: ){
+
+  // }
 
   resultFound() {
     return Object.keys(this.currentWeather).map(key => this.currentWeather[key]);
