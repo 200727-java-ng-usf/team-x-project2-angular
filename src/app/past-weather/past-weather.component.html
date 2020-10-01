@@ -4,7 +4,7 @@
   <form [formGroup]="searchForm" (ngSubmit)="searchForCity()">
     <div class="form-group">
       <label for="search-box">Search for Station By City Name:</label>
-      <input id="search-box" type="text" class="form-control" formControlName="searchTerm" />
+      <input id="search-box" type="text" class="form-control" formControlName="searchTerm" placeholder="{{ this.currentUserSubject.value.home.city }}" />
       <div class="alert alert-warning" role="alert" *ngIf="searchForm.touched && searchTerm.invalid">
         <strong>Search term is required!</strong>
       </div>
