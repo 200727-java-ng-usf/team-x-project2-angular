@@ -32,10 +32,6 @@ export class HomeComponent implements OnInit {
 
   constructor(private hFService: HomeForecastService, private accountService: AccountService, private formBuilder: FormBuilder, private locationService: LocationsService) {
     this.currentUserSubject = accountService.getCurrentUserSubject();
-    let locations = <BehaviorSubject<Location[]>> locationService.getCurrentLocationsSubject();
-    for (let i = 0; i < locations.getValue.length; i++){
-      this.locations[i] = locations.getValue[0];
-    }
 
     console.log(this.currentUserSubject);
     console.log(this.currentUserSubject);

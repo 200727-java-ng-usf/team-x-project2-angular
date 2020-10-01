@@ -26,8 +26,7 @@ export class LocationsService {
     return this.http.get(`${env.USER_API_URL}/user/location/favorites`, {}).pipe(
       map(resp => {
         console.log("RESP: " + resp);
-        let locations = resp as Location[];
-        this.currentLocationsSubject.next(locations);
+
         console.log(resp);
       })
     );
