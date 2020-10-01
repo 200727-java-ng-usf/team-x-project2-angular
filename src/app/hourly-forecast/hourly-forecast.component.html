@@ -1,8 +1,22 @@
 <br/>
 <br/>
 <div class="container" >
+  <!-- Select from favorites -->
+  <form [formGroup]="updateForm" (ngSubmit)="updateLocation()">
+    <div class="form-group">
+      <label for="location">Choose from Your Favorite Locations:</label>
+      <select class="form-control" id="location" formControlName="location" required >
+        <option *ngFor="let location of locations; let i = index" value="{{ location.locationZipCode  }}" selected>
+          Name: {{ location.city }},
+          State: {{ location.state }},
+          Zip: {{ location.locationZipCode }}, {{location.country}}
+        </option>
+      </select>
+      <button type="submit" class="btn btn-primary" [disabled]="!updateForm.touched || updateForm.invalid">Update</button>
+    </div>
+  </form>
   <div class="chartjs-container">
-    <h2>Hourly Forecast For: {{ currentUserSubject.value.home.city }}</h2>
+    <h2>Hourly Forecast For: {{ currentLocation }}</h2>
     <canvas id="tempChart"></canvas>
   </div>
   <div *ngIf="gotForecast">
