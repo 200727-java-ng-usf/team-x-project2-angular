@@ -67,6 +67,10 @@ export class AccountService {
     }).pipe(
       map(resp => {
         let principal = resp.body as Principal;
+        localStorage.setItem('principal', JSON.stringify(principal));
+        let user = JSON.parse(localStorage.getItem('principal'));
+        console.log('parsed user: ');
+        console.log(user);
         this.currentUserSubject.next(principal);
         console.log("Current User: ");
         console.log(this.currentUserSubject.value);

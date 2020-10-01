@@ -9,6 +9,7 @@ import { AccountService } from '../services/account.service';
 import { Principal } from '../models/principal';
 import { BehaviorSubject } from 'rxjs';
 import { FormBuilder, FormGroup, Validators, Form, FormControl } from '@angular/forms';
+import { LocationsService } from '../services/locations.service';
 @Component({
   selector: 'app-seven-day-forecast',
   templateUrl: './seven-day-forecast.component.html',
@@ -26,7 +27,7 @@ export class SevenDayForecastComponent implements OnInit {
   updateForm = new FormGroup({
     location: new FormControl('', Validators.required)
   });
-  constructor(private forecastService: ForecastService, private elementRef: ElementRef, private accountService: AccountService, private formBuilder: FormBuilder) {
+  constructor(private locationService: LocationsService, private forecastService: ForecastService, private elementRef: ElementRef, private accountService: AccountService, private formBuilder: FormBuilder) {
     this.currentUserSubject = this.accountService.getCurrentUserSubject();
     console.log(this.currentUserSubject);
    }
@@ -43,7 +44,12 @@ export class SevenDayForecastComponent implements OnInit {
     this.getForecast(this.updateFields.location.value);
   }
   async getForecast(zip: string){
-    this.currentForecast = <Forecast> await (await this.forecastService.getDailyForecast(zip).then());
+    ;
+    console.log(this.locationService.getFavoriteLocations().subscribe());
+    this.currentForecast = <Forecast> await (await this.forecastService.getDailyForecast(zip));
+
+
+
     this.gotForecast = true;
     let forcastTemps2 = [];
     let forecastMaxTemps2 = [];
