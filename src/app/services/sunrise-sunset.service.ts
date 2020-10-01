@@ -11,11 +11,11 @@ export class SunriseSunsetService {
   suncalc = SunCalc;
   constructor(private http: HttpClient,  private zipster: ZipToLatLonService) { }
 
-  async getLatLonFromZip(zip: number){
+  async getLatLonFromZip(zip: string){
     let zipper: ZipToLL = <ZipToLL> await (await this.zipster.getLatLongFromZip(zip));
     return zipper;
   }
-  async getSunTimesForDay(zip: number, date: Date){
+  async getSunTimesForDay(zip: string, date: Date){
     let latLong = this.getLatLonFromZip(zip);
     return this.suncalc.getTimes(/*Date*/ date,
       /*Number*/ (await latLong).records[0].fields.latitude,

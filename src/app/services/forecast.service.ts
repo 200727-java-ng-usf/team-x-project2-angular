@@ -12,12 +12,12 @@ export class ForecastService {
 
   constructor(private http: HttpClient, private zipster: ZipToLatLonService) { }
 
-  async getLatLonFromZip(zip: number){
+  async getLatLonFromZip(zip: string){
     let zipper: ZipToLL = <ZipToLL> await (await this.zipster.getLatLongFromZip(zip));
     return zipper;
   }
 
-  async getDailyForecast(zip: number) {
+  async getDailyForecast(zip: string) {
     // Get station
     let station = <StationReturn> await this.getGovStation(zip);
     // get weather from station
@@ -27,7 +27,7 @@ export class ForecastService {
     }).toPromise();
   }
 
-  async getGovStation(zip: number){
+  async getGovStation(zip: string){
     let latLong = this.getLatLonFromZip(zip);
     let gridPointCall = env.WEATHER_GOV_API_URL + '/points/' + (await latLong).records[0].fields.latitude + ',' + (await latLong).records[0].fields.longitude;
     return await this.http.get(gridPointCall, {
@@ -37,7 +37,7 @@ export class ForecastService {
     }).toPromise();
   }
 
-  async getGovHourlyForecast(zip: number){
+  async getGovHourlyForecast(zip: string){
     // Get station
     let station = <StationReturn> await this.getGovStation(zip);
     // get weather from station

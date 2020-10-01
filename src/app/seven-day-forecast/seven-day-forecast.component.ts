@@ -23,11 +23,11 @@ export class SevenDayForecastComponent implements OnInit {
     // Get the forecast from the forecast service using hard coded zip
 
 
-    this.getForecast(90210);
+    this.getForecast('90210');
 
   }
 
-  async getForecast(zip: number){
+  async getForecast(zip: string){
     this.currentForecast = <Forecast> await (await this.forecastService.getDailyForecast(zip).then());
     this.gotForecast = true;
     let forcastTemps2 = [];

@@ -16,11 +16,11 @@ export class SunriseSunsetComponent implements OnInit {
   constructor(private riseSetService: SunriseSunsetService, private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.getRiseSet(29150);
+    this.getRiseSet('29150');
 
   }
 
-  async getRiseSet(zip: number){
+  async getRiseSet(zip: string){
     this.gotRiseSet = false;
     // this.riseSet = new SunriseSunset;
     for (let i = 0; i < 30; i++){

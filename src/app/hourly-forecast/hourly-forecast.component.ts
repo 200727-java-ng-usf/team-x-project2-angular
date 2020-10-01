@@ -4,7 +4,9 @@ import { ChartOptions, ChartDataSets, Chart } from 'chart.js';
 import { Color, Label, SingleDataSet } from 'ng2-charts';
 import { WeatherGov } from '../models/weather_gov';
 import { StationReturn } from '../models/forecastStation';
+import { AccountService } from '../services/account.service';
 import { Principal } from '../models/principal';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-hourly-forecast',
   templateUrl: './hourly-forecast.component.html',
@@ -13,13 +15,17 @@ import { Principal } from '../models/principal';
 export class HourlyForecastComponent implements OnInit {
   forecast: WeatherGov;
   station: StationReturn;
-  constructor(private forecastService: ForecastService, private elementRef: ElementRef) { }
+  currentUserSubject: BehaviorSubject<Principal>;
+  constructor(private forecastService: ForecastService, private elementRef: ElementRef, private accountService: AccountService) {
+    this.currentUserSubject = accountService.getCurrentUserSubject();
+    console.log(this.currentUserSubject);
+   }
   gotForecast = false;
   async ngOnInit() {
-    this.getForecast(29150);
+    this.getForecast(this.currentUserSubject.value.home.locationZipCode);
   }
 
-  async getForecast(zip: number){
+  async getForecast(zip: string){
     this.forecast = <WeatherGov> await (await this.forecastService.getGovHourlyForecast(zip));
     console.log(this.forecast.properties.periods);
     let tempArr = [];
