@@ -20,6 +20,7 @@ import { PastWeatherComponent } from './past-weather/past-weather.component';
 import { SunriseSunsetComponent } from './sunrise-sunset/sunrise-sunset.component';
 import { MoonPhaseComponent } from './moon-phase/moon-phase.component';
 import { HourlyForecastComponent } from './hourly-forecast/hourly-forecast.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { HourlyForecastComponent } from './hourly-forecast/hourly-forecast.compo
     PastWeatherComponent,
     SunriseSunsetComponent,
     MoonPhaseComponent,
-    HourlyForecastComponent
+    HourlyForecastComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

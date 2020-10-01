@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   loading = false;
   submitted = false;
+  errorDuringRegistration;
 
   constructor(private formBuilder: FormBuilder, private accountService: AccountService, private router: Router) {
 
@@ -57,6 +58,7 @@ export class RegisterComponent implements OnInit {
                         .subscribe(
                           // user successfully registered
                           () => {
+                            this.errorDuringRegistration = null;
                             this.loading = false;
                             console.log('Register Successful!');
                             console.log('Navigating to dashboard...');
@@ -64,6 +66,7 @@ export class RegisterComponent implements OnInit {
                           },
                           // an error occurs
                           err => {
+                            this.errorDuringRegistration = err;
                             console.log("erRor: ");
                             console.log(err);
                             console.log("Status code");

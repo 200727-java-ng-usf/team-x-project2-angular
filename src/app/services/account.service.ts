@@ -11,8 +11,8 @@ import { environment as env } from '../../environments/environment';
 })
 export class AccountService {
 
-  private currentUserSubject: BehaviorSubject<Principal>
-  currentUser$: Observable<Principal>
+  private currentUserSubject: BehaviorSubject<Principal>;
+  currentUser$: Observable<Principal>;
 
   constructor(private http: HttpClient) {
     console.log('in AccountService.AccountService()');
@@ -68,6 +68,8 @@ export class AccountService {
       map(resp => {
         let principal = resp.body as Principal;
         this.currentUserSubject.next(principal);
+        console.log("Current User: ");
+        console.log(this.currentUserSubject.value);
       })
     );
   }
