@@ -18,7 +18,7 @@ import { Forecast } from '../models/daily-forecast';
 })
 export class HourlyForecastComponent implements OnInit {
   locations: Location[] = [{city: 'sumter',country: 'us',location_id: 1, location_zip_code: '29150', state: 'SC'}];
-  currentLocation;
+  currentLocation = '';
   updating = false;
   updateForm = new FormGroup({
     location: new FormControl('', Validators.required)
@@ -40,7 +40,6 @@ export class HourlyForecastComponent implements OnInit {
   async updateLocation(){
     this.currentLocation = this.updateFields.location.value;
     this.getForecast(this.updateFields.location.value);
-
   }
   async getForecast(zip: string){
     this.forecast = <WeatherGov> await (await this.forecastService.getGovHourlyForecast(zip));

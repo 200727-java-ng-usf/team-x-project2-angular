@@ -15,11 +15,10 @@ export class SunriseSunsetService {
     let zipper: ZipToLL = <ZipToLL> await (await this.zipster.getLatLongFromZip(zip));
     return zipper;
   }
-  async getSunTimesForDay(zip: string, date: Date){
-    let latLong = this.getLatLonFromZip(zip);
+  async getSunTimesForDay(lat: number, lon: number, date: Date){
     return this.suncalc.getTimes(/*Date*/ date,
-      /*Number*/ (await latLong).records[0].fields.latitude,
-     /*Number*/ (await latLong).records[0].fields.longitude,
+      /*Number*/ lat,
+     /*Number*/ lon,
      /*Number (default=0)*/ );
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ForecastService } from '../services/forecast.service';
-
+import { Location } from '../models/location';
 import { ChartOptions, ChartDataSets, Chart } from 'chart.js';
 import { Color, Label, SingleDataSet } from 'ng2-charts';
 import { Forecast } from '../models/daily-forecast';
@@ -8,7 +8,7 @@ import { StationReturn } from '../models/forecastStation';
 import { AccountService } from '../services/account.service';
 import { Principal } from '../models/principal';
 import { BehaviorSubject } from 'rxjs';
-
+import { FormBuilder, FormGroup, Validators, Form, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-seven-day-forecast',
   templateUrl: './seven-day-forecast.component.html',
@@ -20,17 +20,28 @@ export class SevenDayForecastComponent implements OnInit {
   gotForecast = false;
   favoriteLocations = [];
   station: StationReturn;
-  constructor(private forecastService: ForecastService, private elementRef: ElementRef, private accountService: AccountService) { }
-
-  async ngOnInit() {
-    // Get the forecast from the forecast service using hard coded zip
+  currentLocation;
+  locations: Location[] = [{city: 'sumter',country: 'us',location_id: 1, location_zip_code: '29150', state: 'SC'}];
+  updating = false;
+  updateForm = new FormGroup({
+    location: new FormControl('', Validators.required)
+  });
+  constructor(private forecastService: ForecastService, private elementRef: ElementRef, private accountService: AccountService, private formBuilder: FormBuilder) {
     this.currentUserSubject = this.accountService.getCurrentUserSubject();
     console.log(this.currentUserSubject);
+   }
 
+  async ngOnInit() {
     this.getForecast(this.currentUserSubject.value.home.locationZipCode);
-
+    this.currentLocation = this.currentUserSubject.value.home.city;
   }
-
+  get updateFields() {
+    return this.updateForm.controls;
+  }
+  async updateLocation(){
+    this.currentLocation = this.updateFields.location.value;
+    this.getForecast(this.updateFields.location.value);
+  }
   async getForecast(zip: string){
     this.currentForecast = <Forecast> await (await this.forecastService.getDailyForecast(zip).then());
     this.gotForecast = true;
