@@ -70,8 +70,8 @@ export class LocationsService {
 
 
     return this.http.get(`${env.USER_API_URL}/user/location/favorites/` + this.accountService.getCurrentUserSubject().value.userId,
-       {
-      withCredentials: true,
+      {
+      // withCredentials: true,
       // headers:{
 
 
