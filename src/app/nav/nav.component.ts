@@ -64,6 +64,16 @@ export class NavComponent{
     //   fragment: '/logout' //fragment not neccessary
     // }
   ]
+  adminNavLinks = [
+    {
+      linkName: 'View All Users',
+      fragment: '/adminViewAllUsers'
+    },
+    {
+      linkName: 'Update User',
+      fragment: 'adminUpdateUser'
+    }
+  ]
 
   /*private currentUserSubject: BehaviorSubject<Principal>
   currentUser$: Observable<Principal>
