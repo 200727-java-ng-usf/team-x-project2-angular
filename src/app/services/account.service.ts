@@ -31,7 +31,7 @@ export class AccountService {
 
     return this.http.post(`${env.USER_API_URL}/users`, appUser, {
 
-      withCredentials: true,
+      // withCredentials: true,
 
       headers: {
         'Content-type': 'application/json'
@@ -69,7 +69,7 @@ export class AccountService {
 
     return this.http.post(`${env.USER_API_URL}/auth`, credentials, {
 
-      withCredentials: true,
+      // withCredentials: true,
 
       headers: {
         'Content-type': 'application/json'
@@ -92,7 +92,7 @@ export class AccountService {
     );
   }
 
-  // find out the actual endpoint and http method 
+  // find out the actual endpoint and http method
   updatePassword(newPassword: string) {
     console.log('in AccountService.updatePassword()');
 
@@ -111,9 +111,9 @@ export class AccountService {
     console.log(`sending userBody, ${userBody}, to ${env.USER_API_URL}/users as PUT`);
 
     return this.http.put(`${env.USER_API_URL}/users/password?password=${newPassword}`, userBody, {
-      
-      withCredentials: true,
-      
+
+      // withCredentials: true,
+
       headers: {
         'Content-type': 'application/json'
       },
