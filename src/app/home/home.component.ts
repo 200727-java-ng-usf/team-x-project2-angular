@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   clear = false;
   clouds = false;
   atmosphere = false;
-  locations = [];
+  locations: Location[] = [{city: 'sumter',country: 'us',locationId: 1, locationZipCode: '29150', state: 'SC'}];
   updating = false;
   updateForm = new FormGroup({
     location: new FormControl('', Validators.required)
@@ -32,53 +32,30 @@ export class HomeComponent implements OnInit {
 
   constructor(private hFService: HomeForecastService, private accountService: AccountService, private formBuilder: FormBuilder, private locationService: LocationsService) {
     this.currentUserSubject = accountService.getCurrentUserSubject();
-
+    this.locationService.getFavoriteLocations();
     console.log(this.currentUserSubject);
     console.log(this.currentUserSubject);
+    this.locations = <Location[]> JSON.parse(localStorage.getItem('locations'));
    }
 
   async ngOnInit() {
 
-    // harcoded zipcode for now, will get from current user
-    this.currentWeather = <Object[]> await this.hFService.getForecast(this.currentUserSubject.value.home.locationZipCode);
-    this.currentWeatherDescription = this.currentWeather.weather[0].description;
-    this.currentWeatherIconId = this.currentWeather.weather[0].id;
-    // determine the current condition using: https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2
-    if(this.currentWeatherIconId >= 200 && this.currentWeatherIconId < 300){
-      this.thunderstorm = true;
-    }
-    if(this.currentWeatherIconId >= 300 && this.currentWeatherIconId < 400){
-      this.drizzle = true;
-    }
-    if(this.currentWeatherIconId >= 500 && this.currentWeatherIconId < 600){
-      this.rain = true;
-    }
-    if(this.currentWeatherIconId >= 600 && this.currentWeatherIconId < 700){
-      this.snow = true;
-    }
-    if(this.currentWeatherIconId >= 700 && this.currentWeatherIconId < 800){
-      this.atmosphere = true;
-    }
-    if(this.currentWeatherIconId === 800 ){
-      this.clear = true;
-    }
-    if(this.currentWeatherIconId > 800  && this.currentWeatherIconId < 900 ){
-      this.clouds = true;
-    }
-    console.log(this.currentWeather);
+    this.getCurrentWeather(this.currentUserSubject.value.home.locationZipCode);
+
 
   }
 
-  async getFavLocations(){
-
-  }
 
   get updateFields() {
     return this.updateForm.controls;
   }
+
   async updateLocation(){
+    this.getCurrentWeather(this.updateFields.location.value);
+  }
+  async getCurrentWeather(zip: string){
     this.updating = true;
-    this.currentWeather = <Object[]> await this.hFService.getForecast(this.updateFields.location.value);
+    this.currentWeather = <Object[]> await this.hFService.getForecast(zip);
     this.currentWeatherDescription = this.currentWeather.weather[0].description;
     this.currentWeatherIconId = this.currentWeather.weather[0].id;
     // determine the current condition using: https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2

@@ -8,6 +8,7 @@
   </button>
 
   <div class="collapse navbar-collapse" id="nav-links">
+      <!-- User nav links -->
       <ul class="navbar-nav mr-auto">
           <li *ngFor="let link of navLinksForAuthenticated" class="nav-item active">
                 <a *ngIf="currentUserSubject.value" class="nav-link" [routerLink]="link.fragment">{{ link.linkName }}</a>
@@ -20,4 +21,20 @@
           </li>
       </ul>
   </div>
+  <br><br>
+  <div *ngIf="currentUserSubject.value" class="collapse navbar-collapse" id="nav-links">
+      <!-- Admin nav links -->
+      <ul *ngIf="currentUserSubject.value.userRole == 'ADMIN'" class="navbar-nav mr-auto">
+        <li>
+            <h2>Admin</h2>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" [routerLink]="adminNavLinks[0].fragment">{{ adminNavLinks[0].linkName }}</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" [routerLink]="adminNavLinks[1].fragment">{{ adminNavLinks[1].linkName }}</a>
+        </li>
+      </ul>
+  </div>
 </nav>
+<br>

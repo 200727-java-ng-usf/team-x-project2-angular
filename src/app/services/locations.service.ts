@@ -55,6 +55,7 @@ export class LocationsService {
       map(resp => {
         console.log('RESP: ' + resp);
         let location = resp.body as Location[];
+        localStorage.setItem('locations', JSON.stringify(location));
         console.log(location);
         this.currentLocationsSubject.next(location);
       })
