@@ -32,16 +32,16 @@ export class HomeComponent implements OnInit {
 
   constructor(private hFService: HomeForecastService, private accountService: AccountService, private formBuilder: FormBuilder, private locationService: LocationsService) {
     this.currentUserSubject = accountService.getCurrentUserSubject();
-    this.locationService.getFavoriteLocations();
+
     console.log(this.currentUserSubject);
     console.log(this.currentUserSubject);
-    this.locations = <Location[]> JSON.parse(localStorage.getItem('locations'));
+
    }
 
   async ngOnInit() {
-
+    this.locationService.getFavoriteLocations();
     this.getCurrentWeather(this.currentUserSubject.value.home.locationZipCode);
-
+    this.locations = <Location[]> JSON.parse(localStorage.getItem('locations'));
 
   }
 

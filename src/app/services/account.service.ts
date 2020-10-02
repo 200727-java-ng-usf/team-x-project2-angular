@@ -101,9 +101,10 @@ export class AccountService {
     console.log(this.cookieService.get('JSESSIONID'));
     console.log(document.cookie);
 
+
     let userBody = {
       userId: this.currentUserSubject.value.userId,
-      password: newPassword,
+      // password: newPassword,
       username: this.currentUserSubject.value.username,
       userRole: this.currentUserSubject.value.userRole,
       home: this.currentUserSubject.value.home
