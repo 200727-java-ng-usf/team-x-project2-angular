@@ -2,7 +2,7 @@
 <div id="profile-container" class="container">
     <img class="mb-4" src="" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Profile</h1>
-    
+
     <!-- <div>
         <ul class="navbar-nav mr-auto">
             <li *ngFor="let link of navLinksForAuthenticated" class="nav-item active">
@@ -36,5 +36,55 @@
             <img id="loading-img" src="assets/loading.gif" *ngIf="loading" style="height:100px; width:100px;"/>
         </div>
     </form>
+
+</div>
+
+<div id="add-locations" class="container">
+  <img class="mb-4" src="" alt="" width="72" height="72">
+  <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+  <!-- <div class="alert alert-danger" *ngIf="errorDuringRegistration">
+      <p>There was a problem adding this location.<br>
+          Error Code: {{ errorDuringRegistration.status }}<br>
+          Error Message: {{ errorDuringRegistration.message }}
+      </p>
+  </div> -->
+  <form [formGroup]="addLocationForm" (ngSubmit)="addLocation()">
+      <div class="form-group">
+          <label for="city">City</label>
+          <input id="city" type="text" class="form-control" formControlName="city"/>
+          <!-- <div *ngIf="submitted && formFields.city.errors">
+              <p class="alert alert-danger">Username is required!</p>
+          </div> -->
+      </div>
+
+      <div class="form-group">
+          <label for="state">State</label>
+          <input id="state" type="state" class="form-control" formControlName="state"/>
+          <!-- <div *ngIf="submitted && formFields.password.errors">
+              <p class="alert alert-danger">Password is required!</p>
+          </div> -->
+      </div>
+
+      <div class="form-group">
+          <label for="country">Country</label>
+          <input id="country" type="text" class="form-control" formControlName="country"/>
+          <!-- <div *ngIf="submitted && formFields.firstName.errors">
+              <p class="alert alert-danger">First Name is required!</p>
+          </div> -->
+      </div>
+
+      <div class="form-group">
+          <label for="locationZipCode">Zip:</label>
+          <input id="locationZipCode" type="text" class="form-control" formControlName="locationZipCode"/>
+          <!-- <div *ngIf="submitted && formFields.lastName.errors">
+              <p class="alert alert-danger">Last Name is required!</p>
+          </div> -->
+      </div>
+
+      <div class="form-group">
+          <button class="btn btn-primary" [disabled]="loading">Register</button>
+          <img id="loading-img" src="assets/loading.gif" *ngIf="loading" style="height:100px; width:100px;"/>
+      </div>
+  </form>
 
 </div>

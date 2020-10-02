@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { Principal } from '../models/principal';
 import { AccountService } from '../services/account.service';
+import { LocationsService } from '../services/locations.service';
+import { Location } from '../models/location';
 
 @Component({
   selector: 'app-profile',
@@ -16,9 +18,16 @@ export class ProfileComponent implements OnInit {
   updatePasswordForm: FormGroup;
   errorDuringUpdate;
 
-  constructor(private accountService: AccountService) {
+  addLocationForm: FormGroup;
+  constructor(private accountService: AccountService, private locationService: LocationsService) {
     this.updatePasswordForm = new FormGroup({
       password: new FormControl('', Validators.required)
+    });
+    this.addLocationForm = new FormGroup({
+      city: new FormControl('', Validators.required),
+      state: new FormControl('', Validators.required),
+      country: new FormControl('', Validators.required),
+      locationZipCode: new FormControl('', Validators.required)
     });
   }
 
@@ -29,6 +38,9 @@ export class ProfileComponent implements OnInit {
     return this.updatePasswordForm.controls;
   }
 
+  get addLocationFields() {
+    return this.addLocationForm.controls;
+  }
   updatePassword() {
 
     this.submitted = true;
@@ -51,6 +63,38 @@ export class ProfileComponent implements OnInit {
                             this.submitted = false;
                           }
                         )
+
+  }
+
+  addLocation() {
+
+    // this.submitted = true;
+
+    // if(this.updatePasswordForm.invalid) return;
+    let addLocation: Location = {
+      locationId: 0,
+      city: this.addLocationFields.city.value,
+      state: this.addLocationFields.state.value,
+      country: this.addLocationFields.country.value,
+      locationZipCode: this.addLocationFields.locationZipCode.value
+    };
+    this.loading = true;
+    this.locationService.addLocation(addLocation);
+
+    // this.accountService.updatePassword(this.formFields.password.value)
+    //                     .subscribe(
+    //                       () => {
+    //                         this.errorDuringUpdate = null;
+    //                         console.log('Update Successful');
+    //                       },
+    //                       err => {
+    //                         this.errorDuringUpdate = err;
+    //                       },
+    //                       () => {
+    //                         this.loading = false;
+    //                         this.submitted = false;
+    //                       }
+    //                     )
 
   }
 
