@@ -5,6 +5,7 @@ import { Principal } from '../models/principal';
 import { map } from 'rxjs/operators';
 
 import { environment as env } from '../../environments/environment';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,9 @@ export class AccountService {
 
   private currentUserSubject: BehaviorSubject<Principal>;
   currentUser$: Observable<Principal>;
+  cookieValue;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private cookieService: CookieService) {
     console.log('in AccountService.AccountService()');
     this.currentUserSubject = new BehaviorSubject<Principal>(null);
     this.currentUser$ = this.currentUserSubject.asObservable();
@@ -42,6 +44,8 @@ export class AccountService {
         let principal = resp.body as Principal;
         this.currentUserSubject.next(principal);
         localStorage.setItem('principal', JSON.stringify(principal));
+        console.log('COOOKIEEEE');
+        console.log(this.cookieService.get('JSESSIONID'));
       })
 
     );
@@ -82,6 +86,8 @@ export class AccountService {
         localStorage.setItem('principal', JSON.stringify(principal));
         console.log("Current User: ");
         console.log(this.currentUserSubject.value);
+        console.log('COOOKIEEEE');
+        console.log(this.cookieService.get('JSESSIONID'));
       })
     );
   }
@@ -89,6 +95,10 @@ export class AccountService {
   // find out the actual endpoint and http method 
   updatePassword(newPassword: string) {
     console.log('in AccountService.updatePassword()');
+
+    console.log('COOOKIEEEE');
+    console.log(this.cookieService.get('JSESSIONID'));
+    console.log(document.cookie);
 
     let userBody = {
       userId: this.currentUserSubject.value.userId,
