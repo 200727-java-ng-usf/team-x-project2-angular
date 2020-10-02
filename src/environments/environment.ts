@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   // TODO: insert correct User API url, aka Service Layer
-<<<<<<< HEAD
   // USER_API_URL: 'http://project2springapp-env.eba-f2bmdfth.us-east-2.elasticbeanstalk.com',
   USER_API_URL: 'http://project2springapp-env.eba-f2bmdfth.us-east-2.elasticbeanstalk.com',
   OPEN_WEATHER_API_URL: 'https://api.openweathermap.org/data/2.5',
