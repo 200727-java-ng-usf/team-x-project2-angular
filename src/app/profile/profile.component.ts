@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
   submitted = false;
   updatePasswordForm: FormGroup;
   errorDuringUpdate;
-
+  errorDuringRegistration;
   addLocationForm: FormGroup;
   constructor(private accountService: AccountService, private locationService: LocationsService) {
     this.updatePasswordForm = new FormGroup({
@@ -70,30 +70,30 @@ export class ProfileComponent implements OnInit {
 
     // this.submitted = true;
 
-    // if(this.updatePasswordForm.invalid) return;
+    if(this.addLocationForm.invalid) return;
     let addLocation = {
-      // locationId: 0,
+      locationId: 0,
       city: this.addLocationFields.city.value,
       state: this.addLocationFields.state.value,
       country: this.addLocationFields.country.value,
       locationZipCode: this.addLocationFields.locationZipCode.value
     };
     this.loading = true;
-    this.locationService.addLocation(addLocation as Location);
+    this.locationService.addLocation(addLocation)
 
     // this.accountService.updatePassword(this.formFields.password.value)
-    //                     .subscribe(
-    //                       () => {
-    //                         this.errorDuringUpdate = null;
-    //                         console.log('Update Successful');
-    //                       },
-    //                       err => {
-    //                         this.errorDuringUpdate = err;
-    //                       },
-    //                       () => {
-    //                         this.loading = false;
-    //                         this.submitted = false;
-    //                       }
+                        .subscribe(
+                          () => {
+                            this.errorDuringRegistration = null;
+                            console.log('Update Successful');
+                          },
+                          err => {
+                            this.errorDuringRegistration = err;
+                          },
+                          () => {
+                            this.loading = false;
+                            this.submitted = false;
+                          });
     //                     )
 
   }
