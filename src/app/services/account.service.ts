@@ -14,6 +14,7 @@ export class AccountService {
 
   private currentUserSubject: BehaviorSubject<Principal>;
   currentUser$: Observable<Principal>;
+  allUsers;
   cookieValue;
 
   constructor(private http: HttpClient, private cookieService: CookieService) {
@@ -128,6 +129,10 @@ export class AccountService {
       })
     );
 
+  }
+
+  getAllUsers() {
+    this.http.get(`${env.USER_API_URL}/users`).subscribe((res)=>{this.allUsers = res});
   }
 
   logout(): void {

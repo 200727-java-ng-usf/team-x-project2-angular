@@ -71,7 +71,7 @@ export class NavComponent{
     },
     {
       linkName: 'Update User',
-      fragment: 'adminUpdateUser'
+      fragment: '/adminUpdateUser'
     }
   ]
 

@@ -1,0 +1,8 @@
+<div class="container">
+    <table class="table table-dark">
+
+        <th>UserId</th><th>Username</th><th>User Role</th>
+        <tr *ngFor="let user of this.accountService.allUsers"><td>{{ user.userId }}</td><td>{{ user.username }}</td><td>{{ user.userRole }}</td></tr>
+
+    </table>
+</div>

@@ -9,6 +9,8 @@ import { SunriseSunsetComponent } from './sunrise-sunset/sunrise-sunset.componen
 import { MoonPhaseComponent } from './moon-phase/moon-phase.component';
 import { HourlyForecastComponent } from './hourly-forecast/hourly-forecast.component';
 import { ProfileComponent } from './profile/profile.component';
+import { GetAllUsersComponent } from './get-all-users/get-all-users.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent},
@@ -18,7 +20,9 @@ const routes: Routes = [
   { path: 'rise-set', component: SunriseSunsetComponent},
   { path: 'moon-phase', component: MoonPhaseComponent},
   { path: 'hourly-forecast', component: HourlyForecastComponent},
-  { path: 'profile', component: ProfileComponent }
+  { path: 'profile', component: ProfileComponent },
+  { path: 'adminViewAllUsers', component: GetAllUsersComponent},
+  { path: 'adminUpdateUser', component: UpdateUserComponent}
 ];
 
 @NgModule({
