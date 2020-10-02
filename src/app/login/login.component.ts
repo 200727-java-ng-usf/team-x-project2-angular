@@ -17,6 +17,8 @@ export class LoginComponent implements OnInit {
   // Boolean Submitted Value
   submitted = false;
 
+  errorDuringLogin;
+
   constructor(private formBuilder: FormBuilder, private accountService: AccountService, private router: Router) {}
 
   ngOnInit(): void {
@@ -45,12 +47,14 @@ export class LoginComponent implements OnInit {
     this.accountService.authenticate(this.formFields.username.value, this.formFields.password.value)
                     .subscribe(
                       () => {
+                        this.errorDuringLogin = null;
                         this.loading = false;
                         console.log('login successful!');
                         console.log('Navigating to Home...');
                         this.router.navigate(['/home']);
                       },
                       err => {
+                        this.errorDuringLogin = err;
                         console.log(err);
                         this.loading = false;
                         this.submitted = false;

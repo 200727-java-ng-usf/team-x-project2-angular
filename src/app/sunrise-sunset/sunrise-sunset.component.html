@@ -1,0 +1,53 @@
+<br/>
+<br/>
+
+<div class="container">
+  <!-- Select from favorites -->
+  <form [formGroup]="updateForm" (ngSubmit)="updateLocation()">
+    <div class="form-group">
+      <label for="location">Choose from Your Favorite Locations:</label>
+      <select class="form-control" id="location" formControlName="location" required >
+        <option *ngFor="let location of locations; let i = index" value="{{ location.locationZipCode  }}" selected>
+          Name: {{ location.city }},
+          State: {{ location.state }},
+          Zip: {{ location.locationZipCode }}, {{location.country}}
+        </option>
+      </select>
+      <button type="submit" class="btn btn-primary" [disabled]="!updateForm.touched || updateForm.invalid">Update</button>
+    </div>
+  </form>
+  <h2>Sunrise Sunset Times For:  {{ currentLocation }}</h2>
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th>Date</th>
+        <th>Sunrise </th>
+        <th>Sunset </th>
+        <th>Solar Noon</th>
+        <th>Sunset</th>
+        <th>Golden Hour</th>
+        <th>Golden Hour End</th>
+        <th>Dusk</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let day of riseSetForecast; let i = index">
+        <td>{{ day.dawn | date }}</td>
+        <td>{{ day.dawn.toLocaleTimeString() }}</td>
+        <td>{{ day.sunrise.toLocaleTimeString()}}</td>
+        <td>{{ day.solarNoon.toLocaleTimeString() }}</td>
+        <td>{{ day.sunset.toLocaleTimeString() }}</td>
+        <td>{{ day.goldenHour.toLocaleTimeString() }}</td>
+        <td>{{ day.goldenHourEnd.toLocaleTimeString() }}</td>
+        <td>{{ day.dusk.toLocaleTimeString() }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- <div >
+  <div class="alert alert-warning" role="alert" *ngIf="updateForm.touched && !updateForm.valid">
+    <strong>Bad Date Entered!</strong> please try again!
+  </div>
+</div> -->
+

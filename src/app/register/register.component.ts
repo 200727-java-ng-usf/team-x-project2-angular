@@ -1,3 +1,4 @@
+import { ERROR_COMPONENT_TYPE } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,6 +14,7 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   loading = false;
   submitted = false;
+  errorDuringRegistration;
 
   constructor(private formBuilder: FormBuilder, private accountService: AccountService, private router: Router) {
 
@@ -56,19 +58,24 @@ export class RegisterComponent implements OnInit {
                         .subscribe(
                           // user successfully registered
                           () => {
+                            this.errorDuringRegistration = null;
                             this.loading = false;
                             console.log('Register Successful!');
                             console.log('Navigating to dashboard...');
-                            this.router.navigate(['/']);
+                            this.router.navigate(['/home']);
                           },
                           // an error occurs
                           err => {
+                            this.errorDuringRegistration = err;
+                            console.log("erRor: ");
                             console.log(err);
+                            console.log("Status code");
+                            console.log(err.status);
                             this.loading = false;
                             this.submitted = false;
                           },
                           () => {
-                            console.log('observable complete!')
+                            console.log('observable complete!');
                           }
 
                         )

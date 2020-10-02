@@ -1,10 +1,16 @@
 <!-- Main Div Element -->
-<div id="login-container">
+<div id="login-container" class="container">
   <!-- Form  -->
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <!-- TODO:INSERT CUSTOM ICON -->
     <img class="mb-4" src="" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <div class="alert alert-danger" *ngIf="errorDuringLogin">
+      <p>There was a problem logging in.<br>
+          Error Code: {{ errorDuringLogin.status }}<br>
+          Error Message: {{ errorDuringLogin.message }}
+      </p>
+  </div>
     <div class="form-group">
       <label for="username">Username</label>
       <input id="username" type="text" class="form-control" formControlName="username"/>

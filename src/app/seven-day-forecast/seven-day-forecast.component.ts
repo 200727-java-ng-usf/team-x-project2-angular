@@ -1,47 +1,76 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { SevenDayForecastService } from '../services/seven-day-forecast.service';
+import { ForecastService } from '../services/forecast.service';
+import { Location } from '../models/location';
 import { ChartOptions, ChartDataSets, Chart } from 'chart.js';
 import { Color, Label, SingleDataSet } from 'ng2-charts';
-
-
+import { Forecast } from '../models/daily-forecast';
+import { StationReturn } from '../models/forecastStation';
+import { AccountService } from '../services/account.service';
+import { Principal } from '../models/principal';
+import { BehaviorSubject } from 'rxjs';
+import { FormBuilder, FormGroup, Validators, Form, FormControl } from '@angular/forms';
+import { LocationsService } from '../services/locations.service';
 @Component({
   selector: 'app-seven-day-forecast',
   templateUrl: './seven-day-forecast.component.html',
   styleUrls: ['./seven-day-forecast.component.css']
 })
 export class SevenDayForecastComponent implements OnInit {
-  currentForecast: any = <any>{};
-  currentUVForecast: any = <any>{};
-  tempChart: Chart;
-  humidityChart: Chart;
-  uvChart: Chart;
+  currentUserSubject: BehaviorSubject<Principal>;
+  currentForecast: Forecast;
+  gotForecast = false;
   favoriteLocations = [];
-
-  constructor(private forecastService: SevenDayForecastService, private elementRef: ElementRef) { }
+  station: StationReturn;
+  currentLocation = '';
+  locations: Location[] = [{city: 'sumter',country: 'us',locationId: 1, locationZipCode: '29150', state: 'SC'}];
+  updating = false;
+  updateForm = new FormGroup({
+    location: new FormControl('', Validators.required)
+  });
+  constructor(private locationService: LocationsService, private forecastService: ForecastService, private elementRef: ElementRef, private accountService: AccountService, private formBuilder: FormBuilder) {
+    this.currentUserSubject = this.accountService.getCurrentUserSubject();
+    console.log(this.currentUserSubject);
+    this.locations = <Location[]> JSON.parse(localStorage.getItem('locations'));
+    // this.locationService.getCurrentLocationSubject().value;
+    this.currentLocation = this.currentUserSubject.value.home.city;
+  }
 
   async ngOnInit() {
-    // Get the forecast from the forecast service using hard coded zip
-    this.currentForecast = <Object[]> await this.forecastService.getForecast('29150');
-    this.currentUVForecast = <Object[]> await this.forecastService.getUVForecast('29150');
-    this.fillTempChart(this.currentForecast);
-    this.fillHumidityChart(this.currentForecast);
-    this.fillUVChart(this.currentUVForecast);
+    this.getForecast(this.currentUserSubject.value.home.locationZipCode);
+
+
   }
-  // ------------------- Temp Chart ----------------------//
-  fillTempChart(currentForecast: any = {} as any){
+  get updateFields() {
+    return this.updateForm.controls;
+  }
+  async updateLocation(){
+    this.getForecast(this.updateFields.location.value);
+  }
+  get selectedLocation(): any{
+    return this.updateForm.get('selectedLocation');
+  }
+
+  async getForecast(zip: string){
+    // this.locations = <Location[]> JSON.parse(localStorage.getItem('locations'));
+    // console.log();
+    this.currentForecast = <Forecast> await (await this.forecastService.getDailyForecast(zip));
+
+
+
+
     let forcastTemps2 = [];
     let forecastMaxTemps2 = [];
     let forecastMinTemps2 = [];
-    let tempChartLabels2: Label[] = [];
-    for (let i = 0; i < 40; i++){
-      forcastTemps2[i] = currentForecast.list[i].main.temp;
-      forecastMinTemps2[i] = currentForecast.list[i].main.temp_min;
-      forecastMaxTemps2[i] = currentForecast.list[i].main.temp_max;
-      let str = this.currentForecast.list[i].dt_txt;
-      let subStr = str.substring(5, str.length - 3);
-      tempChartLabels2[i] = subStr;
+    let tempChartLabels2 = [];
+    for (let i = 0; i < this.currentForecast.properties.periods.length; i++){
+      forcastTemps2[i] = this.currentForecast.properties.periods[i].temperature;
+      forecastMinTemps2[i] = this.currentForecast.properties.periods[i].minTemperature;
+      forecastMaxTemps2[i] = this.currentForecast.properties.periods[i].maxTemperature;
+      tempChartLabels2[i] = this.currentForecast.properties.periods[i].endTime;
     }
-    this.tempChart = new Chart('tempChart', {
+    this.gotForecast = true;
+    this.currentLocation = zip;
+    let tempChart = new Chart('tempChart', {
       type: 'line',
       data: {
           labels: tempChartLabels2,
@@ -80,85 +109,16 @@ export class SevenDayForecastComponent implements OnInit {
         title: {
           display: true,
           text: '40 Hour Temperature Forecast'
-        }
-      }
-    });
-  }
-  // ------------------- Humidity Chart ----------------------//
-  fillHumidityChart(currentForecast: any = {} as any){
-    let humidityData = [];
-    let humidityLabels: Label[] = [];
-    for (let i = 0; i < 40; i++){
-      humidityData[i] = currentForecast.list[i].main.humidity;
-      let str = this.currentForecast.list[i].dt_txt;
-      let subStr = str.substring(5, str.length - 3);
-      humidityLabels[i] = subStr;
-    }
-    this.humidityChart = new Chart('humidityChart', {
-      type: 'line',
-      data: {
-          labels: humidityLabels,
-          datasets: [{
-            label: 'Humidity',
-            data: humidityData,
-            backgroundColor: 'rgba(21, 255, 255, 0.5)',
-            borderColor: 'black',
-            borderWidth: 2
+        },
+        scales: {
+          xAxes: [{
+              type: 'time',
+              time: {
+                  unit: 'hour',
+              }
           }]
-      },
-      options: {
-        responsive: true,
-        tooltips: {
-          mode: 'index',
-          intersect: false
-        },
-        hover: {
-          mode: 'nearest',
-          intersect: true
-        },
-        title: {
-          display: true,
-          text: '40 Hour Humidity Forecast'
         }
       }
     });
   }
-  // ------------------- UV Chart ----------------------//
-  fillUVChart(currentUVForecast: any = {} as any){
-    let uvData = [];
-    let uvLabels: Label[] = [];
-    for (let i = 0; i < 8; i++){
-      uvData[i] = currentUVForecast[i]?.value;
-      uvLabels[i] = '' + i;
-    }
-    this.uvChart = new Chart('uvChart', {
-      type: 'line',
-      data: {
-          labels: uvLabels,
-          datasets: [{
-            label: 'UV Index',
-            data: uvData,
-            backgroundColor: 'rgba(255, 99, 71, 0.8)',
-            borderColor: 'black',
-            borderWidth: 2
-          }]
-      },
-      options: {
-        responsive: true,
-        tooltips: {
-          mode: 'index',
-          intersect: false
-        },
-        hover: {
-          mode: 'nearest',
-          intersect: true
-        },
-        title: {
-          display: true,
-          text: '8 Hr UV Forecast'
-        }
-      }
-    });
   }
-
-}

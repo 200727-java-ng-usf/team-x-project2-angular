@@ -1,5 +1,12 @@
 export class Principal {
-  id: number;
+  userId: number;
   username: string;
-  role: string;
+  userRole: string;
+  home: {
+    locationId: string;
+    city: string;
+    state: string;
+    county: string;
+    locationZipCode: string;
+  };
 }

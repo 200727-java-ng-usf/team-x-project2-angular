@@ -17,6 +17,11 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { SevenDayForecastComponent } from './seven-day-forecast/seven-day-forecast.component';
 import { PastWeatherComponent } from './past-weather/past-weather.component';
+import { SunriseSunsetComponent } from './sunrise-sunset/sunrise-sunset.component';
+import { MoonPhaseComponent } from './moon-phase/moon-phase.component';
+import { HourlyForecastComponent } from './hourly-forecast/hourly-forecast.component';
+import { ProfileComponent } from './profile/profile.component';
+import { CookieService } from 'ngx-cookie-service'
 
 
 @NgModule({
@@ -27,7 +32,11 @@ import { PastWeatherComponent } from './past-weather/past-weather.component';
     HomeComponent,
     RegisterComponent,
     SevenDayForecastComponent,
-    PastWeatherComponent
+    PastWeatherComponent,
+    SunriseSunsetComponent,
+    MoonPhaseComponent,
+    HourlyForecastComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +47,7 @@ import { PastWeatherComponent } from './past-weather/past-weather.component';
     HttpClientModule,
     ChartsModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

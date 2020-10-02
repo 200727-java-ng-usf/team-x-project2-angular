@@ -1,6 +1,12 @@
-<div id="register-container">
+<div id="register-container" class="container">
     <img class="mb-4" src="" alt="" width="72" height="72">
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+    <div class="alert alert-danger" *ngIf="errorDuringRegistration">
+        <p>There was a problem registering the user.<br>
+            Error Code: {{ errorDuringRegistration.status }}<br>
+            Error Message: {{ errorDuringRegistration.message }}
+        </p>
+    </div>
     <form [formGroup]="registerForm" (ngSubmit)="register()">
         <div class="form-group">
             <label for="username">Username</label>
@@ -44,9 +50,9 @@
 
         <div class="form-group">
             <label for="zipcode">Zip Code</label>
-            <input id="zipcode" type="text" class="form-control" formControlName="zipcode"/>
+            <input id="zipcode" type="text" class="form-control" formControlName="zipcode" pattern="[0-9]{5}"/>
             <div *ngIf="submitted && formFields.zipcode.errors">
-                <p class="alert alert-danger">Zip Code is required!</p>
+                <p class="alert alert-danger">Zip Code must be a 5 digit number</p>
             </div>
         </div>
 

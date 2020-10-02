@@ -10,12 +10,15 @@ export const environment = {
   OPEN_WEATHER_API_KEY: '37be25ea7137d9eef8dfdbf6d70e1b23',
   PAST_WEATHER_API_URL: 'https://api.meteostat.net/v2/stations/',
   PAST_WEATHER_SEARCH_API_URL: 'https://api.meteostat.net/v2/stations/search?query=',
-  PAST_WEATHER_API_KEY: 'vouELAGs6zgSdehEZb6emuihTEf32kPf' // Must be used in Header of Request
+  PAST_WEATHER_API_KEY: 'vouELAGs6zgSdehEZb6emuihTEf32kPf', // Must be used in Header of Request
+  SUNRISE_SUNSET_API_URL: 'https://api.sunrise-sunset.org/json?', // NO api key needed
+  WEATHER_GOV_API_URL: 'https://api.weather.gov',
+  ZIP_TO_LAT_LONG_URL: 'https://public.opendatasoft.com/api/records/1.0/search/?dataset=us-zip-code-latitude-and-longitude&q='
 };
 
 /*
  * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ * to ignore zone relatedr error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
  *
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.

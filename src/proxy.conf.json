@@ -1,0 +1,7 @@
+{
+  "/api/*": {
+      "target": "http://project2springapp-env.eba-f2bmdfth.us-east-2.elasticbeanstalk.com",
+      "secure": false,
+      "logLevel": "debug"
+  }
+}
