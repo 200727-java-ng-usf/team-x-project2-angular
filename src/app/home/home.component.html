@@ -2,7 +2,7 @@
       screen with the current weather displayed -->
 
 <div id="home-container" class="container">
-  <!-- Select from favorites -->
+  <!-- Select from favorites
   <form [formGroup]="updateForm" (ngSubmit)="updateLocation()">
     <div class="form-group">
       <label for="location">Choose from Your Favorite Locations:</label>
@@ -15,7 +15,7 @@
       </select>
       <button type="submit" class="btn btn-primary" [disabled]="!updateForm.touched || updateForm.invalid">Update</button>
     </div>
-  </form>
+  </form> -->
 
   <div>
     <h2 *ngIf="this.currentUserSubject.value">Welcome {{ this.currentUserSubject.value.username }}</h2>
