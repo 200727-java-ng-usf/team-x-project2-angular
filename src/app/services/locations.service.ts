@@ -31,6 +31,26 @@ export class LocationsService {
     return this.currentLocationsSubject;
   }
 
+  addLocation( aLocation: Location){
+    return this.http.post(`${env.USER_API_URL}/locations`, aLocation, {
+      headers: {
+        'Content-type': 'application/json'
+      },
+      observe: 'response',
+      reportProgress: true,
+      withCredentials: true,
+    })
+    .pipe(
+      map(resp => {
+        console.log('RESP: ' + resp);
+        let location = resp.body as Location;
+        localStorage.setItem('location', JSON.stringify(location));
+        console.log(location);
+        // this.currentLocationsSubject.next(location);
+      })
+    );
+  }
+
   getFavoriteLocations(){
     let principal = {
       username: this.accountService.getCurrentUserSubject().value.username,

@@ -30,6 +30,7 @@ export class HourlyForecastComponent implements OnInit {
     this.forecast = new Forecast();
     this.currentUserSubject = accountService.getCurrentUserSubject();
     console.log(this.currentUserSubject);
+    this.locations = <Location[]> JSON.parse(localStorage.getItem('locations'));
    }
   gotForecast = false;
   async ngOnInit() {
