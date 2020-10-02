@@ -14,8 +14,9 @@
       </select>
       <button type="submit" class="btn btn-primary" [disabled]="!updateForm.touched || updateForm.invalid">Update</button>
     </div>
+    <h2>Daily Frecast For: {{ currentLocation }}</h2>
   </form>
-  <h2>Daily Frecast For: {{ this.currentUserSubject.value.home.city }}</h2>
+
 <br/>
 <br/>
 <div class="chartjs-container">
