@@ -1,6 +1,6 @@
 
 <div id="profile-container" class="container">
-    <img class="mb-4" src="" alt="" width="72" height="72">
+
     <h1 class="h3 mb-3 font-weight-normal">Profile</h1>
 
     <!-- <div>
@@ -40,14 +40,14 @@
 </div>
 
 <div id="add-locations" class="container">
-  <img class="mb-4" src="" alt="" width="72" height="72">
+
   <h1 class="h3 mb-3 font-weight-normal">Register</h1>
-  <!-- <div class="alert alert-danger" *ngIf="errorDuringRegistration">
+  <div class="alert alert-danger" *ngIf="errorDuringRegistration">
       <p>There was a problem adding this location.<br>
           Error Code: {{ errorDuringRegistration.status }}<br>
           Error Message: {{ errorDuringRegistration.message }}
       </p>
-  </div> -->
+  </div>
   <form [formGroup]="addLocationForm" (ngSubmit)="addLocation()">
       <div class="form-group">
           <label for="city">City</label>
@@ -76,9 +76,9 @@
       <div class="form-group">
           <label for="locationZipCode">Zip:</label>
           <input id="locationZipCode" type="text" class="form-control" formControlName="locationZipCode"/>
-          <!-- <div *ngIf="submitted && formFields.lastName.errors">
+          <div *ngIf="submitted && addLocationFields.lastName.errors">
               <p class="alert alert-danger">Last Name is required!</p>
-          </div> -->
+          </div>
       </div>
 
       <div class="form-group">
