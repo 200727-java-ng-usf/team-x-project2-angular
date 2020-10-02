@@ -32,12 +32,20 @@ export class LocationsService {
   }
 
   addLocation( aLocation: Location){
+
+    // let userBody = {
+    //   userId: this.currentUserSubject.value.userId,
+    //   // password: newPassword,
+    //   username: this.currentUserSubject.value.username,
+    //   userRole: this.currentUserSubject.value.userRole,
+    //   home: this.currentUserSubject.value.home
+    // };
     return this.http.post(`${env.USER_API_URL}/locations`, aLocation, {
       headers: {
         'Content-type': 'application/json'
       },
       observe: 'response',
-      reportProgress: true,
+      // reportProgress: true,
       withCredentials: true,
     })
     .pipe(
@@ -61,7 +69,8 @@ export class LocationsService {
     console.log("getting user favorite locations");
 
 
-    return this.http.get(`${env.USER_API_URL}/user/location/favorites`, {
+    return this.http.get(`${env.USER_API_URL}/user/location/favorites/` + this.accountService.getCurrentUserSubject().value.userId,
+       {
       withCredentials: true,
       // headers:{
 

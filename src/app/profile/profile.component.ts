@@ -71,15 +71,15 @@ export class ProfileComponent implements OnInit {
     // this.submitted = true;
 
     // if(this.updatePasswordForm.invalid) return;
-    let addLocation: Location = {
-      locationId: 0,
+    let addLocation = {
+      // locationId: 0,
       city: this.addLocationFields.city.value,
       state: this.addLocationFields.state.value,
       country: this.addLocationFields.country.value,
       locationZipCode: this.addLocationFields.locationZipCode.value
     };
     this.loading = true;
-    this.locationService.addLocation(addLocation);
+    this.locationService.addLocation(addLocation as Location);
 
     // this.accountService.updatePassword(this.formFields.password.value)
     //                     .subscribe(
