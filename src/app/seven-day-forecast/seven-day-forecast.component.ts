@@ -21,7 +21,7 @@ export class SevenDayForecastComponent implements OnInit {
   gotForecast = false;
   favoriteLocations = [];
   station: StationReturn;
-  currentLocation;
+  currentLocation = '';
   locations: Location[] = [{city: 'sumter',country: 'us',locationId: 1, locationZipCode: '29150', state: 'SC'}];
   updating = false;
   updateForm = new FormGroup({
@@ -30,27 +30,34 @@ export class SevenDayForecastComponent implements OnInit {
   constructor(private locationService: LocationsService, private forecastService: ForecastService, private elementRef: ElementRef, private accountService: AccountService, private formBuilder: FormBuilder) {
     this.currentUserSubject = this.accountService.getCurrentUserSubject();
     console.log(this.currentUserSubject);
-   }
+    this.locations = <Location[]> JSON.parse(localStorage.getItem('locations'));
+    // this.locationService.getCurrentLocationSubject().value;
+    this.currentLocation = this.currentUserSubject.value.home.city;
+  }
 
   async ngOnInit() {
     this.getForecast(this.currentUserSubject.value.home.locationZipCode);
-    this.currentLocation = this.currentUserSubject.value.home.city;
+
+
   }
   get updateFields() {
     return this.updateForm.controls;
   }
   async updateLocation(){
-    this.currentLocation = this.updateFields.location.value;
     this.getForecast(this.updateFields.location.value);
   }
+  get selectedLocation(): any{
+    return this.updateForm.get('selectedLocation');
+  }
+
   async getForecast(zip: string){
-    ;
-    console.log(this.locationService.getFavoriteLocations().subscribe());
+    // this.locations = <Location[]> JSON.parse(localStorage.getItem('locations'));
+    // console.log();
     this.currentForecast = <Forecast> await (await this.forecastService.getDailyForecast(zip));
 
 
 
-    this.gotForecast = true;
+
     let forcastTemps2 = [];
     let forecastMaxTemps2 = [];
     let forecastMinTemps2 = [];
@@ -61,6 +68,8 @@ export class SevenDayForecastComponent implements OnInit {
       forecastMaxTemps2[i] = this.currentForecast.properties.periods[i].maxTemperature;
       tempChartLabels2[i] = this.currentForecast.properties.periods[i].endTime;
     }
+    this.gotForecast = true;
+    this.currentLocation = zip;
     let tempChart = new Chart('tempChart', {
       type: 'line',
       data: {
