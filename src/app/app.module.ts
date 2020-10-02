@@ -21,6 +21,7 @@ import { SunriseSunsetComponent } from './sunrise-sunset/sunrise-sunset.componen
 import { MoonPhaseComponent } from './moon-phase/moon-phase.component';
 import { HourlyForecastComponent } from './hourly-forecast/hourly-forecast.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CookieService } from 'ngx-cookie-service'
 
 
 @NgModule({
@@ -46,7 +47,7 @@ import { ProfileComponent } from './profile/profile.component';
     HttpClientModule,
     ChartsModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

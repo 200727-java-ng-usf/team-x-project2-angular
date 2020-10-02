@@ -1,1 +1,40 @@
-<p>profile works!</p>
+
+<div id="profile-container" class="container">
+    <img class="mb-4" src="" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Profile</h1>
+    
+    <!-- <div>
+        <ul class="navbar-nav mr-auto">
+            <li *ngFor="let link of navLinksForAuthenticated" class="nav-item active">
+                  <a *ngIf="currentUserSubject.value" class="nav-link" [routerLink]="link.fragment">{{ link.linkName }}</a>
+            </li>
+            <li *ngIf="currentUserSubject.value" class="nav-item active">
+                  <a class="nav-link" (click)="logout()" style="cursor:pointer;">Logout</a>
+            </li>
+            <li *ngFor="let link of navLinksForNonAuthenticated" class="nav-item active">
+                  <a *ngIf="!currentUserSubject.value" class="nav-link" [routerLink]="link.fragment">{{ link.linkName }}</a>
+            </li>
+        </ul>
+    </div> -->
+
+    <div class="alert alert-danger" *ngIf="errorDuringUpdate">
+        <p>There was a problem updating the password.<br>
+            Error Code: {{ errorDuringUpdate.status }}<br>
+            Error Message: {{ errorDuringUpdate.message }}
+        </p>
+    </div>
+    <form [formGroup]="updatePasswordForm" (ngSubmit)="updatePassword()">
+        <div class="form-group">
+            <label for="password">Update Password: </label>
+            <input id="password" type="text" class="form-control" formControlName="password"/>
+            <div *ngIf="submitted && formFields.password.errors">
+                <p class="alert alert-danger">Password is required!</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" [disabled]="loading">Update</button>
+            <img id="loading-img" src="assets/loading.gif" *ngIf="loading" style="height:100px; width:100px;"/>
+        </div>
+    </form>
+
+</div>
